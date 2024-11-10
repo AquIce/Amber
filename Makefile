@@ -9,41 +9,54 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug_run)
+  ADL_config = debug_run
   AquEngine_config = debug_run
 
 else ifeq ($(config),debug_static-build)
+  ADL_config = debug_static-build
   AquEngine_config = debug_static-build
 
 else ifeq ($(config),debug_dynamic-build)
+  ADL_config = debug_dynamic-build
   AquEngine_config = debug_dynamic-build
 
 else ifeq ($(config),release_run)
+  ADL_config = release_run
   AquEngine_config = release_run
 
 else ifeq ($(config),release_static-build)
+  ADL_config = release_static-build
   AquEngine_config = release_static-build
 
 else ifeq ($(config),release_dynamic-build)
+  ADL_config = release_dynamic-build
   AquEngine_config = release_dynamic-build
 
 else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := AquEngine
+PROJECTS := ADL AquEngine
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
+ADL:
+ifneq (,$(ADL_config))
+	@echo "==== Building ADL ($(ADL_config)) ===="
+	@${MAKE} --no-print-directory -C build -f ADL.make config=$(ADL_config)
+endif
+
 AquEngine:
 ifneq (,$(AquEngine_config))
 	@echo "==== Building AquEngine ($(AquEngine_config)) ===="
-	@${MAKE} --no-print-directory -C build -f Makefile config=$(AquEngine_config)
+	@${MAKE} --no-print-directory -C build -f AquEngine.make config=$(AquEngine_config)
 endif
 
 clean:
-	@${MAKE} --no-print-directory -C build -f Makefile clean
+	@${MAKE} --no-print-directory -C build -f ADL.make clean
+	@${MAKE} --no-print-directory -C build -f AquEngine.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -59,6 +72,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
+	@echo "   ADL"
 	@echo "   AquEngine"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
