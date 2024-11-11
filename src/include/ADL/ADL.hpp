@@ -20,7 +20,7 @@ namespace ADL {
         std::vector<struct EventHandler> eventHandlers;
     };
 
-    struct Config newConfig(std::string name, Vec2 size);
+    struct Config newConfig(std::string name, struct Vec2 size);
 
     enum class ExitCode {
         ADL_FATAL_ERR = -1,

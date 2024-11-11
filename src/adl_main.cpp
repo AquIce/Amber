@@ -9,7 +9,7 @@ int WinMain(int argc, char** argv) {
 
     struct ADL::Config config = ADL::newConfig(
         "ADL",
-        newVec2(680, 480)
+        ADL::newVec2(680, 480)
     );
 
     ADL::ExitCode status = ADL::Init_Window(&config);
