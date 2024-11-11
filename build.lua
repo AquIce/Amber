@@ -15,7 +15,7 @@ workspace "Aqu1"
 		}
 		
 		libdirs {
-		    "lib"
+		    "bin"
 		}
 		
 		links {
