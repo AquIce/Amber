@@ -21,6 +21,6 @@ namespace ADL {
         struct RGBA color;
     };
 
-    struct Pixel newPixel(int x = 0, int y = 0, int r = 0, int g = 0, int b = 0, int a = 255);
     struct Pixel newPixel(struct Vec2 position, struct RGBA color);
+    struct Pixel newPixel(int x = 0, int y = 0, int r = 0, int g = 0, int b = 0, int a = 255);
 }
