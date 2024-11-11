@@ -1,6 +1,9 @@
 #include <ADL/config.hpp>
 
-struct ADL::Config ADL::newConfig(std::string name, struct Vec2 size) {
+struct ADL::Config ADL::newConfig(
+    std::string name,
+    struct Vec2 size
+) {
     return {
         name,
         size,

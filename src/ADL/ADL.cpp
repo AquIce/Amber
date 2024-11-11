@@ -1,7 +1,10 @@
+#include "ADL/geo.hpp"
 #include "ADL/screen.hpp"
 #include <ADL/ADL.hpp>
 
-NODISCARD ADL::ExitCode ADL::Init(struct ADL::Config* config) {
+NODISCARD ADL::ExitCode ADL::Init(
+    struct ADL::Config* config
+) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
         return ADL::ExitCode::ADL_FATAL_ERR;
@@ -30,12 +33,17 @@ NODISCARD ADL::ExitCode ADL::Init(struct ADL::Config* config) {
     return ADL::ExitCode::ADL_SUCCESS;
 }
 
-NODISCARD ADL::ExitCode ADL::AddEventHandler(struct ADL::Config* config, ADL::EventHandler handler) {
+NODISCARD ADL::ExitCode ADL::AddEventHandler(
+    struct ADL::Config* config,
+    ADL::EventHandler handler
+) {
     config->eventHandlers.push_back(handler);
     return ADL::ExitCode::ADL_SUCCESS;
 }
 
-NODISCARD ADL::ExitCode ADL::Run(struct ADL::Config* config) {
+NODISCARD ADL::ExitCode ADL::Run(
+    struct ADL::Config* config
+) {
     bool running = true;
     while(running) {
 
@@ -43,16 +51,14 @@ NODISCARD ADL::ExitCode ADL::Run(struct ADL::Config* config) {
 
         ADL::ClearScreen(config);
 
-        SDL_SetRenderDrawColor(config->sdl.renderer, 255, 255, 255, 255);
-        for (int i = 0; i < config->size.x; i++) {
-            struct Pixel p = {
-                { i, i },
-                { 255, 255, 255, 255 }
-            };
-            ADL::RenderPixel(config, &p);
-            p.position = { config->size.x - i, i };
-            ADL::RenderPixel(config, &p);
-        }
+        struct ADL::Line line = {
+            ADL::newVec2(0, 0),
+            ADL::newVec2(config->size.x - 1, config->size.x / 3),
+            ADL::newRGBA(255, 255, 255, 255)
+        };
+
+        ADL::RenderLine(config, &line);
+
         ADL::Flush(config);
 
         // Events Handling

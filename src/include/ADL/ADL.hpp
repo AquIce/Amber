@@ -18,9 +18,16 @@
 
 namespace ADL {
 
-    NODISCARD ExitCode Init(struct Config* config);
+    NODISCARD ExitCode Init(
+        struct Config* config
+    );
 
-    NODISCARD ExitCode AddEventHandler(struct Config* config, EventHandler handler);
+    NODISCARD ExitCode AddEventHandler(
+        struct Config* config,
+        EventHandler handler
+    );
 
-    NODISCARD ExitCode Run(struct Config* config);
+    NODISCARD ExitCode Run(
+        struct Config* config
+    );
 }

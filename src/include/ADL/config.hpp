@@ -22,7 +22,9 @@ namespace ADL {
 
     struct EventHandler {
         SDL_EventType eventType;
-        std::function<void (bool* running)> handler;
+        std::function<void (
+            bool* running
+        )> handler;
     };
 
     struct Config {
@@ -32,5 +34,8 @@ namespace ADL {
         std::vector<struct EventHandler> eventHandlers;
     };
 
-    struct Config newConfig(std::string name, struct Vec2 size);
+    struct Config newConfig(
+        std::string name,
+        struct Vec2 size
+    );
 }
