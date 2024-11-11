@@ -14,3 +14,27 @@ To build the project, use the `build.bat` script:
 ```sh
 ./scripts/build.bat
 ```
+
+## Progress
+
+- [x] Base SDL Setup
+- [x] 1st Project - 2D Function Renderer
+  - [ ] Shapes Render
+    - [x] Render Pixels
+    - [x] Render Lines
+    - [ ] Render Rectangles
+    - [ ] Render Curves
+    - [ ] Render Parabolas
+    - [ ] Render Trigonometry
+  - [ ] Other Components
+    - [ ] Render Text
+    - [ ] Include Text Input
+  - [ ] Product
+- [ ] 2nd Project - 3D Function Renderer
+  - [ ] ...
+- [ ] 3rd Project - Solid Simulation
+  - [ ] ...
+- [ ] 4th Project - Fluid Simulation
+  - [ ] ...
+- [ ] 5th Project - Physics Engine
+  - [ ] ...
