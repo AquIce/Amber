@@ -1,10 +1,15 @@
 #pragma once
 
+#include <ADL/config.hpp>
 #include <ADL/geo.hpp>
+#include <ADL/screen.hpp>
+
+#include <base.hpp>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_video.h>
+#include <SDL2/SDL_render.h>
 
 #include <iostream>
 #include <string>
@@ -13,28 +18,9 @@
 
 namespace ADL {
 
-    struct Config {
-        std::string name;
-        struct Vec2 size;
-        SDL_Window* window;
-        std::vector<struct EventHandler> eventHandlers;
-    };
+    NODISCARD ExitCode Init(struct Config* config);
 
-    struct Config newConfig(std::string name, struct Vec2 size);
+    NODISCARD ExitCode AddEventHandler(struct Config* config, EventHandler handler);
 
-    enum class ExitCode {
-        ADL_FATAL_ERR = -1,
-        ADL_SUCCESS = 0
-    };
-
-    struct EventHandler {
-        SDL_EventType eventType;
-        std::function<void (bool* running)> handler;
-    };
-
-    [[nodiscard]] ExitCode Init_Window(struct Config* config);
-
-    [[nodiscard]] ExitCode AddEventHandler(struct Config* config, EventHandler handler);
-
-    [[nodiscard]] ExitCode Run(const struct Config& config);
+    NODISCARD ExitCode Run(struct Config* config);
 }
