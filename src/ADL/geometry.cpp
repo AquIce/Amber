@@ -175,3 +175,25 @@ std::array<ADL::Line2, 4> ADL::GetRect2Lines2(
         ADL::newLine2(corners[3], corners[0])
     });
 }
+
+struct ADL::Curve2 ADL::newCurve2(
+    struct ADL::Vec2 position,
+    int radius,
+    float openAngle,
+    float angle
+) {
+    return { position, radius, openAngle, angle };
+}
+struct ADL::Curve2 ADL::newCurve2(
+    int x, int y,
+    int radius,
+    float openAngle,
+    float angle
+) {
+    return ADL::newCurve2(
+        ADL::newVec2(x, y),
+        radius,
+        openAngle,
+        angle
+    );
+}

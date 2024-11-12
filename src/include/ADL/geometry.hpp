@@ -6,14 +6,11 @@
 
 namespace ADL {
 
+    // Vec2
+
     struct Vec2 {
         int x;
         int y;
-    };
-
-    struct Vec2F {
-        float x;
-        float y;
     };
 
     struct Vec2 newVec2(
@@ -34,6 +31,8 @@ namespace ADL {
         struct Vec2 vec
     );
 
+    // Line2
+
     struct Line2 {
         Vec2 start;
         Vec2 end;
@@ -44,13 +43,15 @@ namespace ADL {
         Vec2 end
     );
     struct Line2 newLine2(
-        int start_x = 0, int start_y = 0,
-        int end_x = 1, int end_y = 1
+        int start_x, int start_y,
+        int end_x, int end_y
     );
 
     std::vector<struct Vec2> GetLine2Pixels(
         const struct Line2* line
     );
+
+    // Rect2
 
     struct Rect2 {
         struct Vec2 origin;
@@ -64,8 +65,8 @@ namespace ADL {
         float angle = 0
     );
     struct Rect2 newRect2(
-        int x = 0, int y = 0,
-        int w = 1, int h = 1,
+        int x, int y,
+        int w, int h,
         float angle = 0
     );
 
@@ -75,5 +76,27 @@ namespace ADL {
 
     std::array<Line2, 4> GetRect2Lines2(
         const struct Rect2* rect
+    );
+
+    // Curve2
+
+    struct Curve2 {
+        struct Vec2 position;
+        int radius;
+        float openAngle;
+        float angle;
+    };
+
+    struct Curve2 newCurve2(
+        struct Vec2 position,
+        int radius,
+        float openAngle = 2 * M_PI,
+        float angle = 0
+    );
+    struct Curve2 newCurve2(
+        int x, int y,
+        int radius,
+        float openAngle = 2 * M_PI,
+        float angle = 0
     );
 }

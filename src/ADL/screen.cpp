@@ -164,3 +164,49 @@ void ADL::RenderPixelRect(
         );
     }
 }
+
+struct ADL::PixelCurve ADL::newPixelCurve(
+    struct ADL::Curve2 geometry,
+    struct ADL::RGBA color
+) {
+    return { geometry, color };
+}
+struct ADL::PixelCurve ADL::newPixelCurve(
+    struct ADL::Vec2 position,
+    int radius,
+    float openAngle,
+    float angle,
+    struct ADL::RGBA color
+) {
+    return ADL::newPixelCurve(
+        ADL::newCurve2(
+            position,
+            radius,
+            openAngle,
+            angle
+        ),
+        color
+    );
+}
+struct ADL::PixelCurve ADL::newPixelCurve(
+    int x, int y,
+    int radius,
+    float openAngle,
+    float angle,
+    u8 r, u8 g, u8 b, u8 a
+) {
+    return ADL::newPixelCurve(
+        ADL::newVec2(x, y),
+        radius,
+        openAngle,
+        angle,
+        ADL::newRGBA(r, g, b, a)
+    );
+}
+
+void ADL::RenderPixelCurve(
+    ADL::Config* config,
+    const struct ADL::PixelCurve curve
+) {
+
+}

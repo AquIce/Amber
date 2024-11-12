@@ -106,4 +106,35 @@ namespace ADL {
         ADL::Config* config,
         const struct PixelRect* rect
     );
+
+    // Pixel Curve
+
+    struct PixelCurve {
+        struct ADL::Curve2 geometry;
+        struct ADL::RGBA color;
+    };
+
+    struct PixelCurve newPixelCurve(
+        struct ADL::Curve2 geometry,
+        struct ADL::RGBA color
+    );
+    struct PixelCurve newPixelCurve(
+        struct ADL::Vec2 position,
+        int radius,
+        float openAngle,
+        float angle,
+        struct ADL::RGBA color
+    );
+    struct PixelCurve newPixelCurve(
+        int x, int y,
+        int radius,
+        float openAngle,
+        float angle,
+        u8 r, u8 g, u8 b, u8 a
+    );
+
+    void RenderPixelCurve(
+        ADL::Config* config,
+        const struct PixelCurve curve
+    );
 }
