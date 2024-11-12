@@ -4,7 +4,10 @@ void ADL::ClearScreen(
     ADL::Config* config,
     struct ADL::RGBA rgba
 ) {
-    SDL_SetRenderDrawColor(config->sdl.renderer, rgba.r, rgba.g, rgba.b, rgba.a);
+    SDL_SetRenderDrawColor(
+        config->sdl.renderer,
+        rgba.r, rgba.g, rgba.b, rgba.a
+    );
     SDL_RenderClear(config->sdl.renderer);
 }
 
@@ -13,7 +16,10 @@ NODISCARD bool ADL::ChangeRenderRGBA(
     struct ADL::RGBA rgba
 ) {
     u8 r, g, b, a;
-    SDL_GetRenderDrawColor(config->sdl.renderer, &r, &g, &b, &a);
+    SDL_GetRenderDrawColor(
+        config->sdl.renderer,
+        &r, &g, &b, &a
+    );
     if(!ADL::isSameRGBA(rgba, ADL::newRGBA(r, g, b, a))) {
         SDL_SetRenderDrawColor(
             config->sdl.renderer,
@@ -24,7 +30,7 @@ NODISCARD bool ADL::ChangeRenderRGBA(
     return true;
 }
 
-void ADL::Flush(
+void ADL::PushRender(
     ADL::Config* config
 ) {
     SDL_RenderPresent(config->sdl.renderer);
@@ -91,22 +97,70 @@ struct ADL::PixelLine ADL::newPixelLine(
     );
 }
 
-void ADL::RenderLine(
+void ADL::RenderPixelLine(
     ADL::Config* config,
     const struct ADL::PixelLine* line
 ) {
-    float m = static_cast<float>(
-        line->geometry.end.y - line->geometry.start.y
-    ) / line->geometry.end.x - line->geometry.start.x;
-
-    for(u32 x = line->geometry.start.x; x <= line->geometry.end.x; x++) {
-        Pixel p = {
-            ADL::newVec2(
-                x,
-                line->geometry.start.y + m * (x - line->geometry.start.x)
-            ),
+    std::vector<ADL::Vec2> linePixels = ADL::GetLine2Pixels(&line->geometry);
+    for(const auto& pixel : linePixels) {
+        struct ADL::Pixel p = {
+            pixel,
             line->color
         };
         ADL::RenderPixel(config, &p);
+    }
+}
+
+struct ADL::PixelRect ADL::newPixelRect(
+    struct ADL::Rect2 geometry,
+    struct ADL::RGBA color
+) {
+    return { geometry, color };
+}
+struct ADL::PixelRect ADL::newPixelRect(
+    struct ADL::Vec2 origin,
+    struct ADL::Vec2 size,
+    float angle,
+    struct ADL::RGBA color
+) {
+    return ADL::newPixelRect(
+        ADL::newRect2(origin, size, angle),
+        color
+    );
+}
+struct ADL::PixelRect ADL::newPixelRect(
+    int x, int y,
+    int w, int h,
+    float angle,
+    u8 r, u8 g, u8 b, u8 a
+) {
+    return ADL::newPixelRect(
+        ADL::newVec2(x, y),
+        ADL::newVec2(w, h),
+        angle,
+        ADL::newRGBA(r, g, b, a)
+    );
+}
+
+void ADL::RenderPixelRect(
+    ADL::Config* config,
+    const struct ADL::PixelRect* rect
+) {
+    Pixel p = {
+        rect->geometry.origin,
+        ADL::newRGBA(255, 255, 255, 255)
+    };
+    ADL::RenderPixel(config, &p);
+
+    std::array<ADL::Line2, 4> lines = ADL::GetRect2Lines2(&rect->geometry);
+    for(const auto& line : lines) {
+        ADL::PixelLine pLine = ADL::newPixelLine(
+            line,
+            ADL::newRGBA(255, 0, 0, 255)
+        );
+        ADL::RenderPixelLine(
+            config,
+            &pLine
+        );
     }
 }

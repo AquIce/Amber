@@ -43,23 +43,35 @@ NODISCARD ADL::ExitCode ADL::Run(
     struct ADL::Config* config
 ) {
     bool running = true;
+    float angle = 0;
     while(running) {
 
         // Rendering
 
         ADL::ClearScreen(config);
 
-        struct ADL::PixelLine line = {
+        struct ADL::PixelLine line = ADL::newPixelLine(
             ADL::newLine2(
-                ADL::newVec2(0, 0),
-                ADL::newVec2(config->size.x - 1, config->size.x / 3)
+                ADL::newVec2(13, 43),
+                ADL::newVec2(config->size.x - 54, config->size.x / 5)
             ),
             ADL::newRGBA(255, 255, 255, 255)
-        };
+        );
+        ADL::RenderPixelLine(config, &line);
 
-        ADL::RenderLine(config, &line);
+        struct ADL::PixelRect rect = ADL::newPixelRect(
+            ADL::newRect2(
+                ADL::newVec2(240, 240),
+                ADL::newVec2(50, 100),
+                angle
+            ),
+            ADL::newRGBA(255, 0, 0, 255)
+        );
+        angle += M_PI / 1000;
 
-        ADL::Flush(config);
+        ADL::RenderPixelRect(config, &rect);
+
+        ADL::PushRender(config);
 
         // Events Handling
 
