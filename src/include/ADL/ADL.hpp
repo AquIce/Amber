@@ -1,7 +1,8 @@
 #pragma once
 
 #include <ADL/config.hpp>
-#include <ADL/geo.hpp>
+#include <ADL/geometry.hpp>
+#include <ADL/color.hpp>
 #include <ADL/screen.hpp>
 
 #include <base.hpp>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ADL/geo.hpp>
+#include <ADL/geometry.hpp>
 
 #include <SDL2/SDL.h>
 

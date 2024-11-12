@@ -1,7 +1,8 @@
 #pragma once
 
-#include <ADL/ADL.hpp>
-#include <ADL/geo.hpp>
+#include <ADL/geometry.hpp>
+#include <ADL/color.hpp>
+#include <ADL/config.hpp>
 
 #include <base.hpp>
 
@@ -9,21 +10,6 @@
 #include <SDL2/SDL_render.h>
 
 namespace ADL {
-    struct RGBA {
-        u8 r;
-        u8 g;
-        u8 b;
-        u8 a;
-    };
-
-    struct RGBA newRGBA(
-        u8 r = 0, u8 g = 0, u8 b = 0, u8 a = 255
-    );
-
-    bool isSameRGBA(
-        struct RGBA first,
-        struct RGBA second
-    );
 
     void ClearScreen(
         ADL::Config* config,
@@ -40,7 +26,7 @@ namespace ADL {
     );
 
     struct Pixel {
-        struct Vec2 position;
+        struct Vec2 geometry;
         struct RGBA color;
     };
 
@@ -58,18 +44,21 @@ namespace ADL {
         const struct Pixel* pixel
     );
 
-    struct Line {
-        struct Vec2 start;
-        struct Vec2 end;
+    struct PixelLine {
+        struct Line2 geometry;
         struct RGBA color;
     };
 
-    struct Line newLine(
+    struct PixelLine newPixelLine(
+        struct Line2 line,
+        struct RGBA color = newRGBA()
+    );
+    struct PixelLine newPixelLine(
         struct Vec2 start,
         struct Vec2 end,
         struct RGBA color = newRGBA()
     );
-    struct Line newLine(
+    struct PixelLine newPixelLine(
         int start_x, int start_y,
         int end_x, int end_y,
         u8 r = 0, u8 g = 0, u8 b = 0, u8 a = 255
@@ -77,6 +66,6 @@ namespace ADL {
 
     void RenderLine(
         ADL::Config* config,
-        const struct Line* line
+        const struct PixelLine* line
     );
 }

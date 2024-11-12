@@ -10,6 +10,20 @@ namespace ADL {
         int x = 0, int y = 0
     );
 
+    struct Line2 {
+        Vec2 start;
+        Vec2 end;
+    };
+
+    struct Line2 newLine2(
+        Vec2 start,
+        Vec2 end
+    );
+    struct Line2 newLine2(
+        int start_x = 0, int start_y = 0,
+        int end_x = 1, int end_y = 1
+    );
+
     struct Rect2 {
         Vec2 origin;
         Vec2 size;

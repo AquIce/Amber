@@ -1,23 +1,5 @@
 #include <ADL/screen.hpp>
 
-struct ADL::RGBA ADL::newRGBA(
-    u8 r, u8 g, u8 b, u8 a
-) {
-    return { r, g, b, a };
-}
-
-bool ADL::isSameRGBA(
-    struct ADL::RGBA first,
-    struct ADL::RGBA second
-) {
-    return (
-        first.r == second.r &&
-        first.g == second.g &&
-        first.b == second.b &&
-        first.a == second.a
-    );
-}
-
 void ADL::ClearScreen(
     ADL::Config* config,
     struct ADL::RGBA rgba
@@ -74,27 +56,35 @@ void ADL::RenderPixel(
     FORCE_DISCARD ADL::ChangeRenderRGBA(config, pixel->color);
     SDL_RenderDrawPoint(
         config->sdl.renderer,
-        pixel->position.x, pixel->position.y
+        pixel->geometry.x, pixel->geometry.y
     );
 }
 
-struct ADL::Line ADL::newLine(
+struct ADL::PixelLine ADL::newPixelLine(
+    struct ADL::Line2 line,
+    struct ADL::RGBA color
+) {
+    return {
+        line,
+        color
+    };
+}
+struct ADL::PixelLine ADL::newPixelLine(
     struct ADL::Vec2 start,
     struct ADL::Vec2 end,
     struct ADL::RGBA color
 ) {
-    return {
-        start,
-        end,
+    return ADL::newPixelLine(
+        ADL::newLine2(start, end),
         color
-    };
+    );
 }
-struct ADL::Line ADL::newLine(
+struct ADL::PixelLine ADL::newPixelLine(
     int start_x, int start_y,
     int end_x, int end_y,
     u8 r, u8 g, u8 b, u8 a
 ) {
-    return ADL::newLine(
+    return ADL::newPixelLine(
         ADL::newVec2(start_x, start_y),
         ADL::newVec2(end_x, end_y),
         ADL::newRGBA(r, g, b, a)
@@ -103,12 +93,18 @@ struct ADL::Line ADL::newLine(
 
 void ADL::RenderLine(
     ADL::Config* config,
-    const struct ADL::Line* line
+    const struct ADL::PixelLine* line
 ) {
-    float m = static_cast<float>(line->end.y - line->start.y) / line->end.x - line->start.x;
-    for(u32 x = line->start.x; x <= line->end.x; x++) {
+    float m = static_cast<float>(
+        line->geometry.end.y - line->geometry.start.y
+    ) / line->geometry.end.x - line->geometry.start.x;
+
+    for(u32 x = line->geometry.start.x; x <= line->geometry.end.x; x++) {
         Pixel p = {
-            ADL::newVec2(x, line->start.y + m * (x - line->start.x)),
+            ADL::newVec2(
+                x,
+                line->geometry.start.y + m * (x - line->geometry.start.x)
+            ),
             line->color
         };
         ADL::RenderPixel(config, &p);

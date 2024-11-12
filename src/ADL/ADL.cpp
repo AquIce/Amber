@@ -1,5 +1,3 @@
-#include "ADL/geo.hpp"
-#include "ADL/screen.hpp"
 #include <ADL/ADL.hpp>
 
 NODISCARD ADL::ExitCode ADL::Init(
@@ -51,9 +49,11 @@ NODISCARD ADL::ExitCode ADL::Run(
 
         ADL::ClearScreen(config);
 
-        struct ADL::Line line = {
-            ADL::newVec2(0, 0),
-            ADL::newVec2(config->size.x - 1, config->size.x / 3),
+        struct ADL::PixelLine line = {
+            ADL::newLine2(
+                ADL::newVec2(0, 0),
+                ADL::newVec2(config->size.x - 1, config->size.x / 3)
+            ),
             ADL::newRGBA(255, 255, 255, 255)
         };
 
