@@ -18,7 +18,7 @@ To build the project, use the `build.bat` script:
 ## Progress
 
 - [x] Base SDL Setup
-- [x] 1st Project - 2D Function Renderer
+- [ ] 1st Project - 2D Function Renderer
   - [ ] Shapes Render
     - [x] Render Pixels
     - [x] Render Lines
