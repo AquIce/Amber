@@ -1,3 +1,4 @@
+#include "ADL/geometry.hpp"
 #include <ADL/screen.hpp>
 
 void ADL::ClearScreen(
@@ -152,7 +153,9 @@ void ADL::RenderPixelRect(
     };
     ADL::RenderPixel(config, &p);
 
-    std::array<ADL::Line2, 4> lines = ADL::GetRect2Lines2(&rect->geometry);
+    std::array<struct ADL::Line2, 4> lines = ADL::GetRect2Lines2(
+        &rect->geometry
+    );
     for(const auto& line : lines) {
         ADL::PixelLine pLine = ADL::newPixelLine(
             line,
@@ -206,7 +209,16 @@ struct ADL::PixelCurve ADL::newPixelCurve(
 
 void ADL::RenderPixelCurve(
     ADL::Config* config,
-    const struct ADL::PixelCurve curve
+    const struct ADL::PixelCurve* curve
 ) {
-
+    std::vector<struct ADL::Vec2> points = ADL::GetCurve2Points(
+        &curve->geometry
+    );
+    for(const struct ADL::Vec2& point : points) {
+        struct ADL::Pixel pixel = ADL::newPixel(
+            point,
+            curve->color
+        );
+        ADL::RenderPixel(config, &pixel);
+    }
 }

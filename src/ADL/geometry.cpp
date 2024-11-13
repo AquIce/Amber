@@ -108,7 +108,7 @@ struct ADL::Rect2 ADL::newRect2(
     );
 }
 
-std::array<ADL::Vec2, 4> ADL::GetRect2Corners(
+std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
     const struct ADL::Rect2* rect
 ) {
     return {
@@ -163,7 +163,7 @@ std::array<ADL::Vec2, 4> ADL::GetRect2Corners(
     };
 }
 
-std::array<ADL::Line2, 4> ADL::GetRect2Lines2(
+std::array<struct ADL::Line2, 4> ADL::GetRect2Lines2(
     const struct ADL::Rect2* rect
 ) {
     std::array<ADL::Vec2, 4> corners = ADL::GetRect2Corners(rect);
@@ -196,4 +196,74 @@ struct ADL::Curve2 ADL::newCurve2(
         openAngle,
         angle
     );
+}
+
+void ADL::AddCirclePoints(
+    std::vector<struct ADL::Vec2>& points,
+    struct ADL::Vec2 center,
+    struct ADL::Vec2 offset
+) {
+    points.push_back(ADL::newVec2(
+        center.x + offset.x,
+        center.y + offset.y
+    ));
+    points.push_back(ADL::newVec2(
+        center.x + offset.x,
+        center.y - offset.y
+    ));
+    points.push_back(ADL::newVec2(
+        center.x - offset.x,
+        center.y + offset.y
+    ));
+    points.push_back(ADL::newVec2(
+        center.x - offset.x,
+        center.y - offset.y
+    ));
+
+    points.push_back(ADL::newVec2(
+        center.x + offset.y,
+        center.y + offset.x
+    ));
+    points.push_back(ADL::newVec2(
+        center.x + offset.y,
+        center.y - offset.x
+    ));
+    points.push_back(ADL::newVec2(
+        center.x - offset.y,
+        center.y + offset.x
+    ));
+    points.push_back(ADL::newVec2(
+        center.x - offset.y,
+        center.y - offset.x
+    ));
+}
+
+std::vector<struct ADL::Vec2> ADL::GetCurve2Points(
+    const struct ADL::Curve2* curve
+) {
+    std::vector<struct ADL::Vec2> points = {};
+
+    struct ADL::Vec2 pos = ADL::newVec2(0, curve->radius);
+    int d = 3 - 2 * curve->radius;
+
+    ADL::AddCirclePoints(
+        points, curve->position, pos
+    );
+
+    while(pos.y >= pos.x) {
+        if(d > 0) {
+            pos.y--;
+            d += 4 * (pos.x - pos.y) + 10;
+        } else {
+            d += 4 * pos.x + 6;
+        }
+
+        pos.x++;
+
+        ADL::AddCirclePoints(
+            points, curve->position, pos
+        );
+    }
+
+    return points;
 }

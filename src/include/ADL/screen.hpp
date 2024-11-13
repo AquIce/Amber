@@ -135,6 +135,6 @@ namespace ADL {
 
     void RenderPixelCurve(
         ADL::Config* config,
-        const struct PixelCurve curve
+        const struct PixelCurve* curve
     );
 }

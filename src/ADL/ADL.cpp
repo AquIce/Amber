@@ -44,6 +44,8 @@ NODISCARD ADL::ExitCode ADL::Run(
 ) {
     bool running = true;
     float angle = 0;
+    int size = 1;
+    bool up = true;
     while(running) {
 
         // Rendering
@@ -52,8 +54,8 @@ NODISCARD ADL::ExitCode ADL::Run(
 
         struct ADL::PixelLine line = ADL::newPixelLine(
             ADL::newLine2(
-                ADL::newVec2(13, 43),
-                ADL::newVec2(config->size.x - 54, config->size.x / 5)
+                ADL::newVec2(0, 2 * size - radius),
+                ADL::newVec2(config->size.x - 1, config->size.x - 2 * size)
             ),
             ADL::newRGBA(255, 255, 255, 255)
         );
@@ -70,6 +72,23 @@ NODISCARD ADL::ExitCode ADL::Run(
         angle += M_PI / 1000;
 
         ADL::RenderPixelRect(config, &rect);
+
+        struct ADL::PixelCurve curve = ADL::newPixelCurve(
+            ADL::newCurve2(
+                ADL::newVec2(240, 240),
+                size,
+                0, 0
+            ),
+            ADL::newRGBA(0, 255, 0, 255)
+        );
+
+        ADL::RenderPixelCurve(config, &curve);
+        size += up ? 1 : -1;
+        if(size == 250) {
+            up = false;
+        } else if(size == 1) {
+            up = true;
+        }
 
         ADL::PushRender(config);
 

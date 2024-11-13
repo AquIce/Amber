@@ -70,11 +70,11 @@ namespace ADL {
         float angle = 0
     );
 
-    std::array<Vec2, 4> GetRect2Corners(
+    std::array<struct Vec2, 4> GetRect2Corners(
         const struct Rect2* rect
     );
 
-    std::array<Line2, 4> GetRect2Lines2(
+    std::array<struct Line2, 4> GetRect2Lines2(
         const struct Rect2* rect
     );
 
@@ -98,5 +98,15 @@ namespace ADL {
         int radius,
         float openAngle = 2 * M_PI,
         float angle = 0
+    );
+
+    void AddCirclePoints(
+        std::vector<struct Vec2>& points,
+        struct Vec2 center,
+        struct Vec2 offset
+    );
+
+    std::vector<struct Vec2> GetCurve2Points(
+        const struct Curve2* curve
     );
 }
