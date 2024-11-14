@@ -28,7 +28,9 @@ To build the project, use the `build.bat` script:
     - [ ] Render Trigonometry
   - [ ] Other Components
     - [ ] Render Text
-    - [ ] Include Text Input
+    - [ ] Text Inputs
+    - [ ] Buttons
+    - [ ] ...
   - [ ] Product
 - [ ] 2nd Project - 3D Function Renderer
   - [ ] ...
