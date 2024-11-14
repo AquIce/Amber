@@ -46,6 +46,7 @@ NODISCARD ARE::ExitCode ARE::Run(
     float angle = 0;
     int size = 1;
     bool up = true;
+
     while(running) {
 
         // Rendering
@@ -54,8 +55,8 @@ NODISCARD ARE::ExitCode ARE::Run(
 
         struct ARE::PixelLine line = ARE::newPixelLine(
             ARE::newLine2(
-                ARE::newVec2(0, 2 * size - angle),
-                ARE::newVec2(config->size.x - 1, config->size.x - 2 * size)
+                ARE::newVec2(0, 2 * size),
+                ARE::newVec2(config->size.x, config->size.x - 2 * size)
             ),
             ARE::newRGBA(255, 255, 255, 255)
         );
@@ -77,7 +78,7 @@ NODISCARD ARE::ExitCode ARE::Run(
             ARE::newCurve2(
                 ARE::newVec2(240, 240),
                 size,
-                0, 0
+                2 * M_PI / 3, - M_PI / 5
             ),
             ARE::newRGBA(0, 255, 0, 255)
         );

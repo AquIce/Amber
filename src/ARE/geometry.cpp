@@ -237,13 +237,13 @@ void ARE::AddCirclePoints(
         center.y - offset.x
     ));
 }
-
+#include <iostream>
 std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
     const struct ARE::Curve2* curve
 ) {
     std::vector<struct ARE::Vec2> points = {};
 
-    struct ARE::Vec2 pos = ARE::newVec2(0, curve->radius);
+    /*struct ARE::Vec2 pos = ARE::newVec2(0, curve->radius);
     int d = 3 - 2 * curve->radius;
 
     ARE::AddCirclePoints(
@@ -263,6 +263,21 @@ std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
         ARE::AddCirclePoints(
             points, curve->position, pos
         );
+        }*/
+
+    float angleIncrement = M_PI / curve->radius / 4;
+
+    for(
+        float currentAngle = curve->angle;
+        currentAngle < curve->angle + curve->openAngle;
+        currentAngle += angleIncrement
+    ) {
+        struct ARE::Vec2 pos = ARE::newVec2(
+            curve->position.x + std::round(std::cos(currentAngle) * curve->radius),
+            curve->position.y - std::round(std::sin(currentAngle) * curve->radius)
+        );
+        //std::cout << pos.x << ", " << pos.y << "\n";
+        points.push_back(pos);
     }
 
     return points;
