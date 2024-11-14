@@ -1,4 +1,3 @@
-#include "ARE/geometry.hpp"
 #include <ARE/screen.hpp>
 
 void ARE::ClearScreen(
@@ -46,15 +45,6 @@ struct ARE::Pixel ARE::newPixel(
         color
     };
 }
-struct ARE::Pixel ARE::newPixel(
-    int x, int y,
-    int r, int g, int b, int a
-) {
-    return ARE::newPixel(
-        ARE::newVec2(x, y),
-        ARE::newRGBA(r, g, b, a)
-    );
-}
 
 void ARE::RenderPixel(
     ARE::Config* config,
@@ -76,27 +66,6 @@ struct ARE::PixelLine ARE::newPixelLine(
         color
     };
 }
-struct ARE::PixelLine ARE::newPixelLine(
-    struct ARE::Vec2 start,
-    struct ARE::Vec2 end,
-    struct ARE::RGBA color
-) {
-    return ARE::newPixelLine(
-        ARE::newLine2(start, end),
-        color
-    );
-}
-struct ARE::PixelLine ARE::newPixelLine(
-    int start_x, int start_y,
-    int end_x, int end_y,
-    u8 r, u8 g, u8 b, u8 a
-) {
-    return ARE::newPixelLine(
-        ARE::newVec2(start_x, start_y),
-        ARE::newVec2(end_x, end_y),
-        ARE::newRGBA(r, g, b, a)
-    );
-}
 
 void ARE::RenderPixelLine(
     ARE::Config* config,
@@ -117,30 +86,6 @@ struct ARE::PixelRect ARE::newPixelRect(
     struct ARE::RGBA color
 ) {
     return { geometry, color };
-}
-struct ARE::PixelRect ARE::newPixelRect(
-    struct ARE::Vec2 origin,
-    struct ARE::Vec2 size,
-    float angle,
-    struct ARE::RGBA color
-) {
-    return ARE::newPixelRect(
-        ARE::newRect2(origin, size, angle),
-        color
-    );
-}
-struct ARE::PixelRect ARE::newPixelRect(
-    int x, int y,
-    int w, int h,
-    float angle,
-    u8 r, u8 g, u8 b, u8 a
-) {
-    return ARE::newPixelRect(
-        ARE::newVec2(x, y),
-        ARE::newVec2(w, h),
-        angle,
-        ARE::newRGBA(r, g, b, a)
-    );
 }
 
 void ARE::RenderPixelRect(
@@ -174,38 +119,6 @@ struct ARE::PixelCurve ARE::newPixelCurve(
 ) {
     return { geometry, color };
 }
-struct ARE::PixelCurve ARE::newPixelCurve(
-    struct ARE::Vec2 position,
-    int radius,
-    float openAngle,
-    float angle,
-    struct ARE::RGBA color
-) {
-    return ARE::newPixelCurve(
-        ARE::newCurve2(
-            position,
-            radius,
-            openAngle,
-            angle
-        ),
-        color
-    );
-}
-struct ARE::PixelCurve ARE::newPixelCurve(
-    int x, int y,
-    int radius,
-    float openAngle,
-    float angle,
-    u8 r, u8 g, u8 b, u8 a
-) {
-    return ARE::newPixelCurve(
-        ARE::newVec2(x, y),
-        radius,
-        openAngle,
-        angle,
-        ARE::newRGBA(r, g, b, a)
-    );
-}
 
 void ARE::RenderPixelCurve(
     ARE::Config* config,
@@ -218,6 +131,29 @@ void ARE::RenderPixelCurve(
         struct ARE::Pixel pixel = ARE::newPixel(
             point,
             curve->color
+        );
+        ARE::RenderPixel(config, &pixel);
+    }
+}
+
+struct ARE::PixelParabola ARE::newPixelParabola(
+    struct ARE::Parabola2 geometry,
+    struct ARE::RGBA color
+) {
+    return { geometry, color };
+}
+
+void ARE::RenderPixelParabola(
+    ARE::Config* config,
+    const struct ARE::PixelParabola* parabola
+) {
+    std::vector<struct ARE::Vec2> points = ARE::GetParabola2Points(
+        &parabola->geometry
+    );
+    for(const struct ARE::Vec2& point : points) {
+        struct ARE::Pixel pixel = ARE::newPixel(
+            point,
+            parabola->color
         );
         ARE::RenderPixel(config, &pixel);
     }

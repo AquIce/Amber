@@ -40,15 +40,6 @@ struct ARE::Line2 ARE::newLine2(
 ) {
     return { start, end };
 }
-struct ARE::Line2 ARE::newLine2(
-    int start_x, int start_y,
-    int end_x, int end_y
-) {
-    return ARE::newLine2(
-        ARE::newVec2(start_x, start_y),
-        ARE::newVec2(end_x, end_y)
-    );
-}
 
 std::vector<struct ARE::Vec2> ARE::GetLine2Pixels(
     const struct ARE::Line2* line
@@ -94,18 +85,6 @@ struct ARE::Rect2 ARE::newRect2(
     float angle
 ) {
     return { origin, size, angle };
-}
-
-struct ARE::Rect2 ARE::newRect2(
-    int x, int y,
-    int w, int h,
-    float angle
-) {
-    return ARE::newRect2(
-        ARE::newVec2(x, y),
-        ARE::newVec2(w, h),
-        angle
-    );
 }
 
 std::array<struct ARE::Vec2, 4> ARE::GetRect2Corners(
@@ -184,59 +163,6 @@ struct ARE::Curve2 ARE::newCurve2(
 ) {
     return { position, radius, openAngle, angle };
 }
-struct ARE::Curve2 ARE::newCurve2(
-    int x, int y,
-    int radius,
-    float openAngle,
-    float angle
-) {
-    return ARE::newCurve2(
-        ARE::newVec2(x, y),
-        radius,
-        openAngle,
-        angle
-    );
-}
-
-void ARE::AddCirclePoints(
-    std::vector<struct ARE::Vec2>& points,
-    struct ARE::Vec2 center,
-    struct ARE::Vec2 offset
-) {
-    points.push_back(ARE::newVec2(
-        center.x + offset.x,
-        center.y + offset.y
-    ));
-    points.push_back(ARE::newVec2(
-        center.x + offset.x,
-        center.y - offset.y
-    ));
-    points.push_back(ARE::newVec2(
-        center.x - offset.x,
-        center.y + offset.y
-    ));
-    points.push_back(ARE::newVec2(
-        center.x - offset.x,
-        center.y - offset.y
-    ));
-
-    points.push_back(ARE::newVec2(
-        center.x + offset.y,
-        center.y + offset.x
-    ));
-    points.push_back(ARE::newVec2(
-        center.x + offset.y,
-        center.y - offset.x
-    ));
-    points.push_back(ARE::newVec2(
-        center.x - offset.y,
-        center.y + offset.x
-    ));
-    points.push_back(ARE::newVec2(
-        center.x - offset.y,
-        center.y - offset.x
-    ));
-}
 
 std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
     const struct ARE::Curve2* curve
@@ -253,6 +179,69 @@ std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
         struct ARE::Vec2 pos = ARE::newVec2(
             curve->position.x + std::round(std::cos(currentAngle) * curve->radius),
             curve->position.y - std::round(std::sin(currentAngle) * curve->radius)
+        );
+
+        points.push_back(pos);
+    }
+
+    return points;
+}
+
+struct ARE::Parabola2 ARE::newParabola2(
+    struct ARE::Vec2 position,
+    std::vector<float> coefficients,
+    int limit_plus, int limit_minus
+) {
+    return {
+        position,
+        coefficients,
+        limit_plus,
+        limit_minus
+    };
+}
+struct ARE::Parabola2 ARE::newParabola2(
+    struct ARE::Vec2 position,
+    std::vector<float> coefficients,
+    int limit
+) {
+    return ARE::newParabola2(
+        position,
+        coefficients,
+        limit,
+        -limit
+    );
+}
+#include <iostream>
+std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
+    const struct ARE::Parabola2* parabola
+) {
+    std::vector<struct ARE::Vec2> points = {};
+
+    float last_y = 0;
+    float offset = 1;
+
+    for(
+        float x = parabola->limit_minus;
+        x < parabola->limit_plus;
+        x += offset
+    ) {
+        float y = 0;
+        for(
+            size_t exponent = 0;
+            exponent < parabola->coefficients.size();
+            exponent++
+        ) {
+            y += std::pow(x, exponent) * parabola->coefficients[exponent];
+        }
+        if(last_y != 0 && y - last_y > 1) {
+            offset = static_cast<float>(1.5) / (y - last_y);
+            //std::cout << offset << std::endl;
+        }
+        last_y = y;
+
+        struct ARE::Vec2 pos = ARE::newVec2(
+            parabola->position.x + std::round(x),
+            parabola->position.y - std::round(y)
         );
 
         points.push_back(pos);

@@ -3,6 +3,7 @@
 #include <array>
 #include <cmath>
 #include <vector>
+#include <cstddef>
 
 namespace ARE {
 
@@ -42,10 +43,6 @@ namespace ARE {
         Vec2 start,
         Vec2 end
     );
-    struct Line2 newLine2(
-        int start_x, int start_y,
-        int end_x, int end_y
-    );
 
     std::vector<struct Vec2> GetLine2Pixels(
         const struct Line2* line
@@ -62,11 +59,6 @@ namespace ARE {
     struct Rect2 newRect2(
         struct Vec2 origin,
         struct Vec2 size,
-        float angle = 0
-    );
-    struct Rect2 newRect2(
-        int x, int y,
-        int w, int h,
         float angle = 0
     );
 
@@ -93,20 +85,30 @@ namespace ARE {
         float openAngle = 2 * M_PI,
         float angle = 0
     );
-    struct Curve2 newCurve2(
-        int x, int y,
-        int radius,
-        float openAngle = 2 * M_PI,
-        float angle = 0
-    );
-
-    void AddCirclePoints(
-        std::vector<struct Vec2>& points,
-        struct Vec2 center,
-        struct Vec2 offset
-    );
 
     std::vector<struct Vec2> GetCurve2Points(
         const struct Curve2* curve
+    );
+
+    struct Parabola2 {
+        struct Vec2 position;
+        std::vector<float> coefficients;
+        int limit_plus;
+        int limit_minus;
+    };
+
+    struct Parabola2 newParabola2(
+        struct Vec2 position,
+        std::vector<float> coefficients,
+        int limit_plus, int limit_minus
+    );
+    struct Parabola2 newParabola2(
+        struct Vec2 position,
+        std::vector<float> coefficients,
+        int limit
+    );
+
+    std::vector<struct Vec2> GetParabola2Points(
+        const struct Parabola2* parabola
     );
 }

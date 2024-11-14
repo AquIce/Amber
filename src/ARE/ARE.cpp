@@ -46,8 +46,10 @@ NODISCARD ARE::ExitCode ARE::Run(
     float angle = 0;
     int size = 1;
     bool up = true;
+    std::chrono::time_point<std::chrono::system_clock> start;
 
     while(running) {
+        start = std::chrono::system_clock::now();
 
         // Rendering
 
@@ -91,6 +93,17 @@ NODISCARD ARE::ExitCode ARE::Run(
             up = true;
         }
 
+        struct ARE::PixelParabola parabola = ARE::newPixelParabola(
+            ARE::newParabola2(
+                ARE::newVec2(240, 240),
+                std::vector<float>({0, 0, 0, 1.0 / 7 / size}),
+                120
+            ),
+            ARE::newRGBA(255, 255, 0, 255)
+        );
+
+        ARE::RenderPixelParabola(config, &parabola);
+
         ARE::PushRender(config);
 
         // Events Handling
@@ -103,6 +116,10 @@ NODISCARD ARE::ExitCode ARE::Run(
                 }
             }
         }
+
+        std::cout << std::round(static_cast<float>(1000) / std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now() - start
+        ).count()) << " FPS\n";
     }
 
     SDL_DestroyRenderer(config->sdl.renderer);

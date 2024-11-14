@@ -16,6 +16,7 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <chrono>
 
 namespace ARE {
 

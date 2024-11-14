@@ -10,6 +10,7 @@
 #include <SDL2/SDL_render.h>
 
 #include <array>
+#include <cstddef>
 #include <vector>
 
 namespace ARE {
@@ -41,10 +42,6 @@ namespace ARE {
         struct ARE::Vec2 position,
         struct ARE::RGBA color
     );
-    struct Pixel newPixel(
-        int x = 0, int y = 0,
-        int r = 0, int g = 0, int b = 0, int a = 255
-    );
 
     void RenderPixel(
         ARE::Config* config,
@@ -61,16 +58,6 @@ namespace ARE {
     struct PixelLine newPixelLine(
         struct ARE::Line2 line,
         struct ARE::RGBA color = newRGBA()
-    );
-    struct PixelLine newPixelLine(
-        struct ARE::Vec2 start,
-        struct ARE::Vec2 end,
-        struct ARE::RGBA color = newRGBA()
-    );
-    struct PixelLine newPixelLine(
-        int start_x, int start_y,
-        int end_x, int end_y,
-        u8 r = 0, u8 g = 0, u8 b = 0, u8 a = 255
     );
 
     void RenderPixelLine(
@@ -89,18 +76,6 @@ namespace ARE {
         struct ARE::Rect2 geometry,
         struct ARE::RGBA color
     );
-    struct PixelRect newPixelRect(
-        struct ARE::Vec2 origin,
-        struct ARE::Vec2 size,
-        float angle,
-        struct ARE::RGBA color
-    );
-    struct PixelRect newPixelRect(
-        int x = 0, int y = 0,
-        int w = 0, int h = 0,
-        float angle = 0,
-        u8 r = 0, u8 g = 0, u8 b = 0, u8 a = 255
-    );
 
     void RenderPixelRect(
         ARE::Config* config,
@@ -118,23 +93,26 @@ namespace ARE {
         struct ARE::Curve2 geometry,
         struct ARE::RGBA color
     );
-    struct PixelCurve newPixelCurve(
-        struct ARE::Vec2 position,
-        int radius,
-        float openAngle,
-        float angle,
-        struct ARE::RGBA color
-    );
-    struct PixelCurve newPixelCurve(
-        int x, int y,
-        int radius,
-        float openAngle,
-        float angle,
-        u8 r, u8 g, u8 b, u8 a
-    );
 
     void RenderPixelCurve(
         ARE::Config* config,
         const struct PixelCurve* curve
+    );
+
+    // Pixel Parabola
+
+    struct PixelParabola {
+        struct ARE::Parabola2 geometry;
+        struct ARE::RGBA color;
+    };
+
+    struct PixelParabola newPixelParabola(
+        struct ARE::Parabola2 geometry,
+        struct ARE::RGBA color
+    );
+
+    void RenderPixelParabola(
+        ARE::Config* config,
+        const struct PixelParabola* parabola
     );
 }
