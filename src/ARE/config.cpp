@@ -1,6 +1,6 @@
-#include <ADL/config.hpp>
+#include <ARE/config.hpp>
 
-struct ADL::Config ADL::newConfig(
+struct ARE::Config ARE::newConfig(
     std::string name,
     struct Vec2 size
 ) {
@@ -8,6 +8,6 @@ struct ADL::Config ADL::newConfig(
         name,
         size,
         { nullptr, nullptr },
-        std::vector<struct ADL::EventHandler>()
+        std::vector<struct ARE::EventHandler>()
     };
 }

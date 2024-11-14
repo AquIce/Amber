@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 
-namespace ADL {
+namespace ARE {
 
     // Vec2
 

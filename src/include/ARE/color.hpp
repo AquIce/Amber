@@ -2,7 +2,7 @@
 
 #include <base.hpp>
 
-namespace ADL {
+namespace ARE {
     struct RGBA {
         u8 r;
         u8 g;

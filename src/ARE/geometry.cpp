@@ -1,14 +1,14 @@
-#include <ADL/geometry.hpp>
+#include <ARE/geometry.hpp>
 
-struct ADL::Vec2 ADL::newVec2(
+struct ARE::Vec2 ARE::newVec2(
     int x, int y
 ) {
     return { x, y };
 }
 
-struct ADL::Vec2 ADL::AddVec2(
-    struct ADL::Vec2 first,
-    struct ADL::Vec2 second
+struct ARE::Vec2 ARE::AddVec2(
+    struct ARE::Vec2 first,
+    struct ARE::Vec2 second
 ) {
     return newVec2(
         first.x + second.x,
@@ -16,8 +16,8 @@ struct ADL::Vec2 ADL::AddVec2(
     );
 }
 
-struct ADL::Vec2 ADL::MultiplyVec2(
-    struct ADL::Vec2 vec,
+struct ARE::Vec2 ARE::MultiplyVec2(
+    struct ARE::Vec2 vec,
     float factor
 ) {
     return newVec2(
@@ -26,39 +26,39 @@ struct ADL::Vec2 ADL::MultiplyVec2(
     );
 }
 
-struct ADL::Vec2 ADL::ReverseVec2(
-    struct ADL::Vec2 vec
+struct ARE::Vec2 ARE::ReverseVec2(
+    struct ARE::Vec2 vec
 ) {
-    return ADL::newVec2(
+    return ARE::newVec2(
         -vec.x, -vec.y
     );
 }
 
-struct ADL::Line2 ADL::newLine2(
-    ADL::Vec2 start,
-    ADL::Vec2 end
+struct ARE::Line2 ARE::newLine2(
+    ARE::Vec2 start,
+    ARE::Vec2 end
 ) {
     return { start, end };
 }
-struct ADL::Line2 ADL::newLine2(
+struct ARE::Line2 ARE::newLine2(
     int start_x, int start_y,
     int end_x, int end_y
 ) {
-    return ADL::newLine2(
-        ADL::newVec2(start_x, start_y),
-        ADL::newVec2(end_x, end_y)
+    return ARE::newLine2(
+        ARE::newVec2(start_x, start_y),
+        ARE::newVec2(end_x, end_y)
     );
 }
 
-std::vector<struct ADL::Vec2> ADL::GetLine2Pixels(
-    const struct ADL::Line2* line
+std::vector<struct ARE::Vec2> ARE::GetLine2Pixels(
+    const struct ARE::Line2* line
 ) {
     int x1 = line->start.x,
         y1 = line->start.y,
         x2 = line->end.x,
         y2 = line->end.y;
 
-    std::vector<struct ADL::Vec2> linePixels;
+    std::vector<struct ARE::Vec2> linePixels;
 
     int dx = std::abs(x2 - x1);
     int dy = std::abs(y2 - y1);
@@ -67,7 +67,7 @@ std::vector<struct ADL::Vec2> ADL::GetLine2Pixels(
     int err = dx - dy;
 
     while(true) {
-        linePixels.push_back(ADL::newVec2(x1, y1));
+        linePixels.push_back(ARE::newVec2(x1, y1));
 
         if(x1 == x2 && y1 == y2) {
             break;
@@ -88,31 +88,31 @@ std::vector<struct ADL::Vec2> ADL::GetLine2Pixels(
     return linePixels;
 }
 
-struct ADL::Rect2 ADL::newRect2(
-    struct ADL::Vec2 origin,
-    struct ADL::Vec2 size,
+struct ARE::Rect2 ARE::newRect2(
+    struct ARE::Vec2 origin,
+    struct ARE::Vec2 size,
     float angle
 ) {
     return { origin, size, angle };
 }
 
-struct ADL::Rect2 ADL::newRect2(
+struct ARE::Rect2 ARE::newRect2(
     int x, int y,
     int w, int h,
     float angle
 ) {
-    return ADL::newRect2(
-        ADL::newVec2(x, y),
-        ADL::newVec2(w, h),
+    return ARE::newRect2(
+        ARE::newVec2(x, y),
+        ARE::newVec2(w, h),
         angle
     );
 }
 
-std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
-    const struct ADL::Rect2* rect
+std::array<struct ARE::Vec2, 4> ARE::GetRect2Corners(
+    const struct ARE::Rect2* rect
 ) {
     return {
-        ADL::newVec2(
+        ARE::newVec2(
             std::round(
                 rect->origin.x +
                 (static_cast<float>(rect->size.x) / 2) * std::cos(rect->angle) -
@@ -124,7 +124,7 @@ std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
                 (static_cast<float>(rect->size.y) / 2) * std::cos(rect->angle)
             )
         ),
-        ADL::newVec2(
+        ARE::newVec2(
             std::round(
                 rect->origin.x -
                 (static_cast<float>(rect->size.x) / 2) * std::cos(rect->angle) -
@@ -136,7 +136,7 @@ std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
                 (static_cast<float>(rect->size.y) / 2) * std::cos(rect->angle)
             )
         ),
-        ADL::newVec2(
+        ARE::newVec2(
             std::round(
                 rect->origin.x -
                 (static_cast<float>(rect->size.x) / 2) * std::cos(rect->angle) +
@@ -148,7 +148,7 @@ std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
                 (static_cast<float>(rect->size.y) / 2) * std::cos(rect->angle)
             )
         ),
-        ADL::newVec2(
+        ARE::newVec2(
             std::round(
                 rect->origin.x +
                 (static_cast<float>(rect->size.x) / 2) * std::cos(rect->angle) +
@@ -163,90 +163,90 @@ std::array<struct ADL::Vec2, 4> ADL::GetRect2Corners(
     };
 }
 
-std::array<struct ADL::Line2, 4> ADL::GetRect2Lines2(
-    const struct ADL::Rect2* rect
+std::array<struct ARE::Line2, 4> ARE::GetRect2Lines2(
+    const struct ARE::Rect2* rect
 ) {
-    std::array<ADL::Vec2, 4> corners = ADL::GetRect2Corners(rect);
+    std::array<ARE::Vec2, 4> corners = ARE::GetRect2Corners(rect);
 
-    return std::array<ADL::Line2, 4>({
-        ADL::newLine2(corners[0], corners[1]),
-        ADL::newLine2(corners[1], corners[2]),
-        ADL::newLine2(corners[2], corners[3]),
-        ADL::newLine2(corners[3], corners[0])
+    return std::array<ARE::Line2, 4>({
+        ARE::newLine2(corners[0], corners[1]),
+        ARE::newLine2(corners[1], corners[2]),
+        ARE::newLine2(corners[2], corners[3]),
+        ARE::newLine2(corners[3], corners[0])
     });
 }
 
-struct ADL::Curve2 ADL::newCurve2(
-    struct ADL::Vec2 position,
+struct ARE::Curve2 ARE::newCurve2(
+    struct ARE::Vec2 position,
     int radius,
     float openAngle,
     float angle
 ) {
     return { position, radius, openAngle, angle };
 }
-struct ADL::Curve2 ADL::newCurve2(
+struct ARE::Curve2 ARE::newCurve2(
     int x, int y,
     int radius,
     float openAngle,
     float angle
 ) {
-    return ADL::newCurve2(
-        ADL::newVec2(x, y),
+    return ARE::newCurve2(
+        ARE::newVec2(x, y),
         radius,
         openAngle,
         angle
     );
 }
 
-void ADL::AddCirclePoints(
-    std::vector<struct ADL::Vec2>& points,
-    struct ADL::Vec2 center,
-    struct ADL::Vec2 offset
+void ARE::AddCirclePoints(
+    std::vector<struct ARE::Vec2>& points,
+    struct ARE::Vec2 center,
+    struct ARE::Vec2 offset
 ) {
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x + offset.x,
         center.y + offset.y
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x + offset.x,
         center.y - offset.y
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x - offset.x,
         center.y + offset.y
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x - offset.x,
         center.y - offset.y
     ));
 
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x + offset.y,
         center.y + offset.x
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x + offset.y,
         center.y - offset.x
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x - offset.y,
         center.y + offset.x
     ));
-    points.push_back(ADL::newVec2(
+    points.push_back(ARE::newVec2(
         center.x - offset.y,
         center.y - offset.x
     ));
 }
 
-std::vector<struct ADL::Vec2> ADL::GetCurve2Points(
-    const struct ADL::Curve2* curve
+std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
+    const struct ARE::Curve2* curve
 ) {
-    std::vector<struct ADL::Vec2> points = {};
+    std::vector<struct ARE::Vec2> points = {};
 
-    struct ADL::Vec2 pos = ADL::newVec2(0, curve->radius);
+    struct ARE::Vec2 pos = ARE::newVec2(0, curve->radius);
     int d = 3 - 2 * curve->radius;
 
-    ADL::AddCirclePoints(
+    ARE::AddCirclePoints(
         points, curve->position, pos
     );
 
@@ -260,7 +260,7 @@ std::vector<struct ADL::Vec2> ADL::GetCurve2Points(
 
         pos.x++;
 
-        ADL::AddCirclePoints(
+        ARE::AddCirclePoints(
             points, curve->position, pos
         );
     }

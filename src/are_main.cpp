@@ -1,4 +1,4 @@
-#include <ADL/ADL.hpp>
+#include <ARE/ARE.hpp>
 
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
@@ -7,24 +7,24 @@
 
 int WinMain(int argc, char** argv) {
 
-    struct ADL::Config config = ADL::newConfig(
-        "ADL",
-        ADL::newVec2(480, 480)
+    struct ARE::Config config = ARE::newConfig(
+        "ARE",
+        ARE::newVec2(480, 480)
     );
 
-    ADL::ExitCode status = ADL::Init(&config);
-    if(status != ADL::ExitCode::ADL_SUCCESS) {
+    ARE::ExitCode status = ARE::Init(&config);
+    if(status != ARE::ExitCode::ADL_SUCCESS) {
         return static_cast<int>(status);
     }
 
-    FORCE_DISCARD ADL::AddEventHandler(&config, {
+    FORCE_DISCARD ARE::AddEventHandler(&config, {
         SDL_QUIT,
         [] (bool* running) -> void {
             *running = false;
         }
     });
 
-    (void)ADL::Run(&config);
+    (void)ARE::Run(&config);
 
     return 0;
 }

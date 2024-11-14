@@ -1,9 +1,9 @@
 #pragma once
 
-#include <ADL/config.hpp>
-#include <ADL/geometry.hpp>
-#include <ADL/color.hpp>
-#include <ADL/screen.hpp>
+#include <ARE/config.hpp>
+#include <ARE/geometry.hpp>
+#include <ARE/color.hpp>
+#include <ARE/screen.hpp>
 
 #include <base.hpp>
 
@@ -17,7 +17,7 @@
 #include <functional>
 #include <vector>
 
-namespace ADL {
+namespace ARE {
 
     NODISCARD ExitCode Init(
         struct Config* config

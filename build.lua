@@ -3,15 +3,15 @@ workspace "Aqu1"
 	platforms { "run", "static-build", "dynamic-build" }
 	startproject "AquEngine"
 	
-	project "ADL"
+	project "ARE"
 	    language "C++"
 		location "build/"
 		entrypoint "main"
 		
 		files {
-		    "src/adl_main.cpp",
-		    "src/adl/*.cpp",
-		    "src/include/adl/*.hpp"
+		    "src/are_main.cpp",
+		    "src/ARE/*.cpp",
+		    "src/include/ARE/*.hpp"
 		}
 		
 		libdirs {

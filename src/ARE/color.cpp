@@ -1,14 +1,14 @@
-#include <ADL/color.hpp>
+#include <ARE/color.hpp>
 
-struct ADL::RGBA ADL::newRGBA(
+struct ARE::RGBA ARE::newRGBA(
     u8 r, u8 g, u8 b, u8 a
 ) {
     return { r, g, b, a };
 }
 
-bool ADL::isSameRGBA(
-    struct ADL::RGBA first,
-    struct ADL::RGBA second
+bool ARE::isSameRGBA(
+    struct ARE::RGBA first,
+    struct ARE::RGBA second
 ) {
     return (
         first.r == second.r &&

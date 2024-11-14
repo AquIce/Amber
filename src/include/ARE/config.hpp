@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ADL/geometry.hpp>
+#include <ARE/geometry.hpp>
 
 #include <SDL2/SDL.h>
 
@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 
-namespace ADL {
+namespace ARE {
 
     struct ADL_SDL {
         SDL_Window* window;
