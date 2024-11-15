@@ -80,7 +80,7 @@ NODISCARD ARE::ExitCode ARE::Run(
             ARE::newCurve2(
                 ARE::newVec2(240, 240),
                 size,
-                2 * M_PI / 3, - M_PI / 5
+                angle * 4, M_PI / 3
             ),
             ARE::newRGBA(0, 255, 0, 255)
         );
@@ -117,9 +117,9 @@ NODISCARD ARE::ExitCode ARE::Run(
             }
         }
 
-        std::cout << std::round(static_cast<float>(1000) / std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::cout << static_cast<float>(std::round(static_cast<float>(100 * 1000) / std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now() - start
-        ).count()) << " FPS\n";
+        ).count())) / 100 << " FPS\n";
     }
 
     SDL_DestroyRenderer(config->sdl.renderer);
