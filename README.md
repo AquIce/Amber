@@ -24,7 +24,7 @@ To build the project, use the `build.bat` script:
     - [x] Render Lines
     - [x] Render Rectangles
     - [x] Render Curves
-    - [ ] Render Parabolas
+    - [x] Render Parabolas
     - [ ] Render Trigonometry
   - [ ] Other Components
     - [ ] Render Text

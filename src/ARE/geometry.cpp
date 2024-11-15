@@ -171,9 +171,13 @@ std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
 
     float angleIncrement = M_PI / curve->radius / 4;
 
+    float openAngle = curve->openAngle > static_cast<float>(2 * M_PI) ?
+        static_cast<float>(2 * M_PI) :
+        curve->openAngle;
+
     for(
         float currentAngle = curve->angle;
-        currentAngle < curve->angle + curve->openAngle;
+        currentAngle < curve->angle + openAngle;
         currentAngle += angleIncrement
     ) {
         struct ARE::Vec2 pos = ARE::newVec2(
@@ -213,16 +217,23 @@ struct ARE::Parabola2 ARE::newParabola2(
 }
 #include <iostream>
 std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
-    const struct ARE::Parabola2* parabola
+    const struct ARE::Parabola2* parabola,
+    int y_limit_plus,
+    int y_limit_minus
 ) {
     std::vector<struct ARE::Vec2> points = {};
 
     float last_y = 0;
     float offset = 1;
+    bool plus_in = true;
+    bool minus_in = true;
 
     for(
-        float x = parabola->limit_minus;
-        x < parabola->limit_plus;
+        float x = 0;
+        x < std::max(
+            std::abs(parabola->limit_minus),
+            std::abs(parabola->limit_plus)
+        ) && (plus_in || minus_in);
         x += offset
     ) {
         float y = 0;
@@ -234,17 +245,46 @@ std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
             y += std::pow(x, exponent) * parabola->coefficients[exponent];
         }
         if(last_y != 0 && y - last_y > 1) {
-            offset = static_cast<float>(1.5) / (y - last_y);
-            //std::cout << offset << std::endl;
+            offset = static_cast<float>(0.1) / (y - last_y);
         }
         last_y = y;
 
-        struct ARE::Vec2 pos = ARE::newVec2(
-            parabola->position.x + std::round(x),
-            parabola->position.y - std::round(y)
-        );
+        if(minus_in && x >= parabola->limit_minus) {
+            struct ARE::Vec2 pos = ARE::newVec2(
+                parabola->position.x - std::round(x),
+                parabola->position.y + std::round(y)
+            );
 
-        points.push_back(pos);
+            if(pos.y > y_limit_plus) {
+                if(
+                    parabola->coefficients.size() % 2 != 0 &&
+                    parabola->coefficients.at(0) < 0
+                ) {
+                    points.push_back(pos);
+                    continue;
+                }
+                minus_in = false;
+            }
+            points.push_back(pos);
+        }
+        if(plus_in && x <= parabola->limit_plus) {
+            struct ARE::Vec2 pos = ARE::newVec2(
+                parabola->position.x + std::round(x),
+                parabola->position.y - std::round(y)
+            );
+
+            if(pos.y < y_limit_minus) {
+                if(
+                    parabola->coefficients.size() % 2 != 0 &&
+                    parabola->coefficients.at(0) < 0
+                ) {
+                    points.push_back(pos);
+                    continue;
+                }
+                plus_in = false;
+            }
+            points.push_back(pos);
+        }
     }
 
     return points;

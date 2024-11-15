@@ -96,7 +96,7 @@ NODISCARD ARE::ExitCode ARE::Run(
         struct ARE::PixelParabola parabola = ARE::newPixelParabola(
             ARE::newParabola2(
                 ARE::newVec2(240, 240),
-                std::vector<float>({0, 0, 0, 1.0 / 7 / size}),
+                std::vector<float>({0, 0, 0, 0.1 / 7 / size}),
                 120
             ),
             ARE::newRGBA(255, 255, 0, 255)

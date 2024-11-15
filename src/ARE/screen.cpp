@@ -148,7 +148,8 @@ void ARE::RenderPixelParabola(
     const struct ARE::PixelParabola* parabola
 ) {
     std::vector<struct ARE::Vec2> points = ARE::GetParabola2Points(
-        &parabola->geometry
+        &parabola->geometry,
+        config->size.y, 0
     );
     for(const struct ARE::Vec2& point : points) {
         struct ARE::Pixel pixel = ARE::newPixel(

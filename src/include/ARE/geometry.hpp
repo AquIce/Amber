@@ -109,6 +109,8 @@ namespace ARE {
     );
 
     std::vector<struct Vec2> GetParabola2Points(
-        const struct Parabola2* parabola
+        const struct Parabola2* parabola,
+        int y_limit_plus,
+        int y_limit_minus
     );
 }
