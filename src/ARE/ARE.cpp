@@ -1,11 +1,19 @@
 #include <ARE/ARE.hpp>
 
-NODISCARD ARE::ExitCode ARE::Init(
+NODISCARD struct ARE::ReturnCode ARE::Init(
     struct ARE::Config* config
 ) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        std::cerr << "Error initializing SDL: " << SDL_GetError() << std::endl;
-        return ARE::ExitCode::ADL_FATAL_ERR;
+        return ARE::log(
+            ARE::newLog(
+                ARE::LogLevel::ERROR,
+                ARE::newReturnCode(
+                    true,
+                    -1
+                ),
+                std::string("Error initializing SDL: ") + SDL_GetError()
+            )
+        );
     }
 
     config->sdl.window = SDL_CreateWindow(
@@ -17,29 +25,45 @@ NODISCARD ARE::ExitCode ARE::Init(
     );
 
     if(!config->sdl.window) {
-        std::cerr << "Error trying to create window: " << SDL_GetError() << std::endl;
-        return ARE::ExitCode::ADL_FATAL_ERR;
+        return ARE::log(
+            ARE::newLog(
+                ARE::LogLevel::ERROR,
+                ARE::newReturnCode(
+                    true,
+                    -1
+                ),
+                std::string("Error trying to create window: ") + SDL_GetError()
+            )
+        );
     }
 
     config->sdl.renderer = SDL_CreateRenderer(config->sdl.window, 0, 0);
 
     if(!config->sdl.renderer) {
-        std::cerr << "Error trying to create renderer: " << SDL_GetError() << std::endl;
-        return ARE::ExitCode::ADL_FATAL_ERR;
+        return ARE::log(
+            ARE::newLog(
+                ARE::LogLevel::ERROR,
+                ARE::newReturnCode(
+                    true,
+                    -1
+                ),
+                std::string("Error trying to create renderer: ") + SDL_GetError()
+            )
+        );
     }
 
-    return ARE::ExitCode::ADL_SUCCESS;
+    return ARE::newReturnCode();
 }
 
-NODISCARD ARE::ExitCode ARE::AddEventHandler(
+NODISCARD ARE::ReturnCode ARE::AddEventHandler(
     struct ARE::Config* config,
     ARE::EventHandler handler
 ) {
     config->eventHandlers.push_back(handler);
-    return ARE::ExitCode::ADL_SUCCESS;
+    return ARE::newReturnCode();
 }
 
-NODISCARD ARE::ExitCode ARE::Run(
+NODISCARD ARE::ReturnCode ARE::Run(
     struct ARE::Config* config
 ) {
     bool running = true;
@@ -125,5 +149,5 @@ NODISCARD ARE::ExitCode ARE::Run(
     SDL_DestroyRenderer(config->sdl.renderer);
     SDL_DestroyWindow(config->sdl.window);
 
-    return ARE::ExitCode::ADL_SUCCESS;
+    return ARE::newReturnCode();
 }

@@ -15,11 +15,6 @@ namespace ARE {
         SDL_Renderer* renderer;
     };
 
-    enum class ExitCode {
-        ADL_FATAL_ERR = -1,
-        ADL_SUCCESS = 0
-    };
-
     struct EventHandler {
         SDL_EventType eventType;
         std::function<void (

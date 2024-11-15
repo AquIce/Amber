@@ -3,8 +3,6 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
-#include <iostream>
-
 int WinMain(int argc, char** argv) {
 
     struct ARE::Config config = ARE::newConfig(
@@ -12,9 +10,9 @@ int WinMain(int argc, char** argv) {
         ARE::newVec2(480, 480)
     );
 
-    ARE::ExitCode status = ARE::Init(&config);
-    if(status != ARE::ExitCode::ADL_SUCCESS) {
-        return static_cast<int>(status);
+    ARE::ReturnCode status = ARE::Init(&config);
+    if(status.isExitCode) {
+        return static_cast<int>(status.exitCode);
     }
 
     FORCE_DISCARD ARE::AddEventHandler(&config, {

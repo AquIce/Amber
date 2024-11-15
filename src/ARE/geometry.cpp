@@ -215,7 +215,7 @@ struct ARE::Parabola2 ARE::newParabola2(
         -limit
     );
 }
-#include <iostream>
+
 std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
     const struct ARE::Parabola2* parabola,
     int y_limit_plus,
