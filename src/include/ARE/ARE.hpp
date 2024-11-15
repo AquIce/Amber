@@ -5,6 +5,7 @@
 #include <ARE/geometry.hpp>
 #include <ARE/color.hpp>
 #include <ARE/screen.hpp>
+#include <ARE/bench.hpp>
 
 #include <base.hpp>
 
@@ -16,7 +17,6 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include <chrono>
 
 namespace ARE {
 

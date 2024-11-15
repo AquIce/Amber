@@ -70,10 +70,12 @@ NODISCARD ARE::ReturnCode ARE::Run(
     float angle = 0;
     int size = 1;
     bool up = true;
-    std::chrono::time_point<std::chrono::system_clock> start;
+    ARE::Benchmark benchmark = ARE::newBenchmark("FPS Counter");
 
     while(running) {
-        start = std::chrono::system_clock::now();
+        FORCE_DISCARD ARE::log(
+            ARE::AddBenchmarkMilestone(&benchmark)
+        );
 
         // Rendering
 
@@ -140,11 +142,9 @@ NODISCARD ARE::ReturnCode ARE::Run(
                 }
             }
         }
-
-        std::cout << static_cast<float>(std::round(static_cast<float>(100 * 1000) / std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now() - start
-        ).count())) / 100 << " FPS\n";
     }
+
+    ARE::ShowBenchmarkStats(benchmark);
 
     SDL_DestroyRenderer(config->sdl.renderer);
     SDL_DestroyWindow(config->sdl.window);
