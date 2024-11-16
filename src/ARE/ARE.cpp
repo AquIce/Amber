@@ -122,13 +122,27 @@ NODISCARD ARE::ReturnCode ARE::Run(
         struct ARE::PixelParabola parabola = ARE::newPixelParabola(
             ARE::newParabola2(
                 ARE::newVec2(240, 240),
-                std::vector<float>({0, 0, 0, 0.1 / 7 / size}),
+                std::vector<float>({0, 0, 0, static_cast<float>(
+                    0.1 / 7 / size
+                )}),
                 120
             ),
             ARE::newRGBA(255, 255, 0, 255)
         );
 
         ARE::RenderPixelParabola(config, &parabola);
+
+        struct ARE::PixelTrig trig = ARE::newPixelTrig(
+            ARE::newTrig2(
+                ARE::newVec2(240, 360),
+                ARE::TrigType::SIN,
+                5,
+                240, -240
+            ),
+            ARE::newRGBA(255, 255, 255, 255)
+        );
+
+        ARE::RenderPixelTrig(config, &trig);
 
         ARE::PushRender(config);
 

@@ -25,13 +25,13 @@ namespace ARE {
     );
 
     struct Log {
-        LogLevel level;
+        enum LogLevel level;
         struct ReturnCode code;
         std::string message;
     };
 
     struct Log newLog(
-        LogLevel level,
+        enum LogLevel level,
         struct ReturnCode code,
         std::string message
     );

@@ -159,3 +159,27 @@ void ARE::RenderPixelParabola(
         ARE::RenderPixel(config, &pixel);
     }
 }
+
+struct ARE::PixelTrig ARE::newPixelTrig(
+    struct ARE::Trig2 geometry,
+    struct ARE::RGBA color
+) {
+    return { geometry, color };
+}
+
+void ARE::RenderPixelTrig(
+    ARE::Config* config,
+    const struct ARE::PixelTrig* trig
+) {
+    std::vector<struct ARE::Vec2> points = ARE::GetTrig2Points(
+        &trig->geometry
+    );
+
+    for(const struct ARE::Vec2& point : points) {
+        struct ARE::Pixel pixel = ARE::newPixel(
+            point,
+            trig->color
+        );
+        ARE::RenderPixel(config, &pixel);
+    }
+}

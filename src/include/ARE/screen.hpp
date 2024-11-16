@@ -115,4 +115,21 @@ namespace ARE {
         ARE::Config* config,
         const struct PixelParabola* parabola
     );
+
+    // Pixel Trig
+
+    struct PixelTrig {
+        struct ARE::Trig2 geometry;
+        struct ARE::RGBA color;
+    };
+
+    struct PixelTrig newPixelTrig(
+        struct ARE::Trig2 geometry,
+        struct ARE::RGBA color
+    );
+
+    void RenderPixelTrig(
+        ARE::Config* config,
+        const struct ARE::PixelTrig* trig
+    );
 }

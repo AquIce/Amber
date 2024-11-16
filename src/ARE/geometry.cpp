@@ -289,3 +289,72 @@ std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
 
     return points;
 }
+
+struct ARE::Trig2 ARE::newTrig2(
+    struct ARE::Vec2 position,
+    enum ARE::TrigType type,
+    float coefficient,
+    int limit_plus,
+    int limit_minus
+) {
+    return {
+        position,
+        type,
+        coefficient,
+        limit_plus,
+        limit_minus
+    };
+}
+
+std::vector<struct ARE::Vec2> ARE::GetTrig2Points(
+    const struct ARE::Trig2* trig
+) {
+    std::vector<struct ARE::Vec2> points = {};
+
+    std::function<float (float)> trigFn;
+    switch(trig->type) {
+        case ARE::TrigType::SIN:
+            trigFn = (float (*)(float))&std::sin;
+            break;
+        case ARE::TrigType::COS:
+            trigFn = (float (*)(float))&std::cos;
+            break;
+        case ARE::TrigType::TAN:
+            trigFn = (float (*)(float))&std::tan;
+            break;
+        case ARE::TrigType::SEC:
+            trigFn = [] (float angle) -> float {
+                return static_cast<float>(1) / std::sin(angle);
+            };
+            break;
+        case ARE::TrigType::CSC:
+            trigFn = [] (float angle) -> float {
+                return static_cast<float>(1) / std::cos(angle);
+            };
+            break;
+        default: //case ARE::TrigType::COT:
+            trigFn = [] (float angle) -> float {
+                return static_cast<float>(1) / std::tan(angle);
+            };
+            break;
+    }
+
+    float offset = std::abs(trigFn(1.1) - trigFn(0.1)) / trig->coefficient;
+
+    for(
+        float x = trig->limit_minus;
+        x < trig->limit_plus;
+        x += offset
+    ) {
+        float y = trig->coefficient * trigFn(x);
+
+        struct ARE::Vec2 pos = ARE::newVec2(
+            trig->position.x - std::round(x),
+            trig->position.y + std::round(y)
+        );
+
+        points.push_back(pos);
+    }
+
+    return points;
+}

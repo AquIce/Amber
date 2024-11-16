@@ -8,7 +8,7 @@ struct ARE::ReturnCode ARE::newReturnCode(
 }
 
 struct ARE::Log ARE::newLog(
-    ARE::LogLevel level,
+    enum ARE::LogLevel level,
     struct ARE::ReturnCode code,
     std::string message
 ) {

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <cstddef>
+#include <functional>
 
 namespace ARE {
 
@@ -90,6 +91,8 @@ namespace ARE {
         const struct Curve2* curve
     );
 
+    // Parabola2
+
     struct Parabola2 {
         struct Vec2 position;
         std::vector<float> coefficients;
@@ -112,5 +115,36 @@ namespace ARE {
         const struct Parabola2* parabola,
         int y_limit_plus,
         int y_limit_minus
+    );
+
+    // Trig2
+
+    enum class TrigType {
+        SIN = 0,
+        COS,
+        TAN,
+        SEC,
+        CSC,
+        COT
+    };
+
+    struct Trig2 {
+        struct Vec2 position;
+        enum TrigType type;
+        float coefficient;
+        int limit_plus;
+        int limit_minus;
+    };
+
+    struct Trig2 newTrig2(
+        struct Vec2 position,
+        enum TrigType type,
+        float coefficient,
+        int limit_plus,
+        int limit_minus
+    );
+
+    std::vector<struct Vec2> GetTrig2Points(
+        const struct Trig2* trig
     );
 }

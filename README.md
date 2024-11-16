@@ -19,13 +19,13 @@ To build the project, use the `build.bat` script:
 
 - [x] Base SDL Setup
 - [ ] 1st Project - 2D Function Renderer
-  - [ ] Shapes Render
+  - [x] Shapes Render
     - [x] Render Pixels
     - [x] Render Lines
     - [x] Render Rectangles
     - [x] Render Curves
     - [x] Render Parabolas
-    - [ ] Render Trigonometry
+    - [x] Render Trigonometry
   - [ ] Other Components
     - [ ] Render Text
     - [ ] Text Inputs
