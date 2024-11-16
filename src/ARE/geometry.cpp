@@ -41,7 +41,7 @@ struct ARE::Line2 ARE::newLine2(
     return { start, end };
 }
 
-std::vector<struct ARE::Vec2> ARE::GetLine2Pixels(
+std::vector<struct ARE::Vec2> ARE::GetLine2Points(
     const struct ARE::Line2* line
 ) {
     int x1 = line->start.x,
@@ -155,6 +155,25 @@ std::array<struct ARE::Line2, 4> ARE::GetRect2Lines2(
     });
 }
 
+std::vector<struct ARE::Vec2> ARE::GetRect2Points(
+    const struct ARE::Rect2* rect
+) {
+    std::vector<struct ARE::Vec2> points;
+
+    std::array<struct ARE::Line2, 4> lines = ARE::GetRect2Lines2(rect);
+
+    for(const struct ARE::Line2& line : lines) {
+        std::vector<struct ARE::Vec2> linePoints = ARE::GetLine2Points(&line);
+        points.insert(
+            points.end(),
+            linePoints.begin(),
+            linePoints.end()
+        );
+    }
+
+    return points;
+}
+
 struct ARE::Curve2 ARE::newCurve2(
     struct ARE::Vec2 position,
     int radius,
@@ -194,32 +213,19 @@ std::vector<struct ARE::Vec2> ARE::GetCurve2Points(
 struct ARE::Parabola2 ARE::newParabola2(
     struct ARE::Vec2 position,
     std::vector<float> coefficients,
-    int limit_plus, int limit_minus
+    struct ARE::Vec2 max,
+    struct ARE::Vec2 min
 ) {
     return {
         position,
         coefficients,
-        limit_plus,
-        limit_minus
+        max,
+        min
     };
-}
-struct ARE::Parabola2 ARE::newParabola2(
-    struct ARE::Vec2 position,
-    std::vector<float> coefficients,
-    int limit
-) {
-    return ARE::newParabola2(
-        position,
-        coefficients,
-        limit,
-        -limit
-    );
 }
 
 std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
-    const struct ARE::Parabola2* parabola,
-    int y_limit_plus,
-    int y_limit_minus
+    const struct ARE::Parabola2* parabola
 ) {
     std::vector<struct ARE::Vec2> points = {};
 
@@ -231,8 +237,8 @@ std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
     for(
         float x = 0;
         x < std::max(
-            std::abs(parabola->limit_minus),
-            std::abs(parabola->limit_plus)
+            std::abs(parabola->min.x),
+            std::abs(parabola->max.x)
         ) && (plus_in || minus_in);
         x += offset
     ) {
@@ -249,13 +255,13 @@ std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
         }
         last_y = y;
 
-        if(minus_in && x >= parabola->limit_minus) {
+        if(minus_in && x >= parabola->min.x) {
             struct ARE::Vec2 pos = ARE::newVec2(
                 parabola->position.x - std::round(x),
                 parabola->position.y + std::round(y)
             );
 
-            if(pos.y > y_limit_plus) {
+            if(pos.y > parabola->max.y) {
                 if(
                     parabola->coefficients.size() % 2 != 0 &&
                     parabola->coefficients.at(0) < 0
@@ -267,13 +273,13 @@ std::vector<struct ARE::Vec2> ARE::GetParabola2Points(
             }
             points.push_back(pos);
         }
-        if(plus_in && x <= parabola->limit_plus) {
+        if(plus_in && x <= parabola->max.x) {
             struct ARE::Vec2 pos = ARE::newVec2(
                 parabola->position.x + std::round(x),
                 parabola->position.y - std::round(y)
             );
 
-            if(pos.y < y_limit_minus) {
+            if(pos.y < parabola->min.y) {
                 if(
                     parabola->coefficients.size() % 2 != 0 &&
                     parabola->coefficients.at(0) < 0

@@ -40,3 +40,7 @@ To build the project, use the `build.bat` script:
   - [ ] ...
 - [ ] 5th Project - Physics Engine
   - [ ] ...
+
+## Tasks
+
+- [ ] Add possiblity to edit created geometry (better perfs)

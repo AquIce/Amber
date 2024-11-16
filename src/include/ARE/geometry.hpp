@@ -45,7 +45,7 @@ namespace ARE {
         Vec2 end
     );
 
-    std::vector<struct Vec2> GetLine2Pixels(
+    std::vector<struct Vec2> GetLine2Points(
         const struct Line2* line
     );
 
@@ -68,6 +68,10 @@ namespace ARE {
     );
 
     std::array<struct Line2, 4> GetRect2Lines2(
+        const struct Rect2* rect
+    );
+
+    std::vector<struct Vec2> GetRect2Points(
         const struct Rect2* rect
     );
 
@@ -96,25 +100,19 @@ namespace ARE {
     struct Parabola2 {
         struct Vec2 position;
         std::vector<float> coefficients;
-        int limit_plus;
-        int limit_minus;
+        struct Vec2 max;
+        struct Vec2 min;
     };
 
     struct Parabola2 newParabola2(
         struct Vec2 position,
         std::vector<float> coefficients,
-        int limit_plus, int limit_minus
-    );
-    struct Parabola2 newParabola2(
-        struct Vec2 position,
-        std::vector<float> coefficients,
-        int limit
+        struct Vec2 max,
+        struct Vec2 min
     );
 
     std::vector<struct Vec2> GetParabola2Points(
-        const struct Parabola2* parabola,
-        int y_limit_plus,
-        int y_limit_minus
+        const struct Parabola2* parabola
     );
 
     // Trig2

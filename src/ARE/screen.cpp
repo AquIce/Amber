@@ -37,11 +37,11 @@ void ARE::PushRender(
 }
 
 struct ARE::Pixel ARE::newPixel(
-    struct ARE::Vec2 position,
+    struct ARE::Vec2 geometry,
     struct ARE::RGBA color
 ) {
     return {
-        position,
+        geometry,
         color
     };
 }
@@ -58,128 +58,146 @@ void ARE::RenderPixel(
 }
 
 struct ARE::PixelLine ARE::newPixelLine(
-    struct ARE::Line2 line,
-    struct ARE::RGBA color
+    struct ARE::Line2 geometry,
+    struct ARE::RGBA color,
+    bool isStatic
 ) {
     return {
-        line,
-        color
+        geometry,
+        color,
+        isStatic,
+        ARE::GetLine2Points(&geometry)
     };
 }
 
 void ARE::RenderPixelLine(
     ARE::Config* config,
-    const struct ARE::PixelLine* line
+    struct ARE::PixelLine* line
 ) {
-    std::vector<ARE::Vec2> linePixels = ARE::GetLine2Pixels(&line->geometry);
-    for(const auto& pixel : linePixels) {
-        struct ARE::Pixel p = {
-            pixel,
+    if(!line->isStatic) {
+        line->points = ARE::GetLine2Points(&line->geometry);
+    }
+    for(const struct ARE::Vec2& point : line->points) {
+        struct ARE::Pixel pixel = {
+            point,
             line->color
         };
-        ARE::RenderPixel(config, &p);
+        ARE::RenderPixel(config, &pixel);
     }
 }
 
 struct ARE::PixelRect ARE::newPixelRect(
     struct ARE::Rect2 geometry,
-    struct ARE::RGBA color
+    struct ARE::RGBA color,
+    bool isStatic
 ) {
-    return { geometry, color };
+    return {
+        geometry,
+        color,
+        isStatic,
+        ARE::GetRect2Points(&geometry)
+    };
 }
 
 void ARE::RenderPixelRect(
     ARE::Config* config,
-    const struct ARE::PixelRect* rect
+    struct ARE::PixelRect* rect
 ) {
-    Pixel p = {
-        rect->geometry.origin,
-        ARE::newRGBA(255, 255, 255, 255)
-    };
-    ARE::RenderPixel(config, &p);
-
-    std::array<struct ARE::Line2, 4> lines = ARE::GetRect2Lines2(
-        &rect->geometry
-    );
-    for(const auto& line : lines) {
-        ARE::PixelLine pLine = ARE::newPixelLine(
-            line,
-            ARE::newRGBA(255, 0, 0, 255)
-        );
-        ARE::RenderPixelLine(
-            config,
-            &pLine
-        );
+    if(!rect->isStatic) {
+        rect->points = ARE::GetRect2Points(&rect->geometry);
+    }
+    for(const struct ARE::Vec2& point : rect->points) {
+        struct ARE::Pixel pixel = {
+            point,
+            rect->color
+        };
+        ARE::RenderPixel(config, &pixel);
     }
 }
 
 struct ARE::PixelCurve ARE::newPixelCurve(
     struct ARE::Curve2 geometry,
-    struct ARE::RGBA color
+    struct ARE::RGBA color,
+    bool isStatic
 ) {
-    return { geometry, color };
+    return {
+        geometry,
+        color,
+        isStatic,
+        ARE::GetCurve2Points(&geometry)
+    };
 }
 
 void ARE::RenderPixelCurve(
     ARE::Config* config,
-    const struct ARE::PixelCurve* curve
+    struct ARE::PixelCurve* curve
 ) {
-    std::vector<struct ARE::Vec2> points = ARE::GetCurve2Points(
-        &curve->geometry
-    );
-    for(const struct ARE::Vec2& point : points) {
-        struct ARE::Pixel pixel = ARE::newPixel(
+    if(!curve->isStatic) {
+        curve->points = ARE::GetCurve2Points(&curve->geometry);
+    }
+    for(const struct ARE::Vec2& point : curve->points) {
+        struct ARE::Pixel pixel = {
             point,
             curve->color
-        );
+        };
         ARE::RenderPixel(config, &pixel);
     }
 }
 
 struct ARE::PixelParabola ARE::newPixelParabola(
     struct ARE::Parabola2 geometry,
-    struct ARE::RGBA color
+    struct ARE::RGBA color,
+    bool isStatic
 ) {
-    return { geometry, color };
+    return {
+        geometry,
+        color,
+        isStatic,
+        ARE::GetParabola2Points(&geometry)
+    };
 }
 
 void ARE::RenderPixelParabola(
     ARE::Config* config,
-    const struct ARE::PixelParabola* parabola
+    struct ARE::PixelParabola* parabola
 ) {
-    std::vector<struct ARE::Vec2> points = ARE::GetParabola2Points(
-        &parabola->geometry,
-        config->size.y, 0
-    );
-    for(const struct ARE::Vec2& point : points) {
-        struct ARE::Pixel pixel = ARE::newPixel(
+    if(!parabola->isStatic) {
+        parabola->points = ARE::GetParabola2Points(&parabola->geometry);
+    }
+    for(const struct ARE::Vec2& point : parabola->points) {
+        struct ARE::Pixel pixel = {
             point,
             parabola->color
-        );
+        };
         ARE::RenderPixel(config, &pixel);
     }
 }
 
 struct ARE::PixelTrig ARE::newPixelTrig(
     struct ARE::Trig2 geometry,
-    struct ARE::RGBA color
+    struct ARE::RGBA color,
+    bool isStatic
 ) {
-    return { geometry, color };
+    return {
+        geometry,
+        color,
+        isStatic,
+        ARE::GetTrig2Points(&geometry)
+    };
 }
 
 void ARE::RenderPixelTrig(
     ARE::Config* config,
-    const struct ARE::PixelTrig* trig
+    struct ARE::PixelTrig* trig
 ) {
-    std::vector<struct ARE::Vec2> points = ARE::GetTrig2Points(
-        &trig->geometry
-    );
-
-    for(const struct ARE::Vec2& point : points) {
-        struct ARE::Pixel pixel = ARE::newPixel(
+    if(!trig->isStatic) {
+        trig->points = ARE::GetTrig2Points(&trig->geometry);
+    }
+    for(const struct ARE::Vec2& point : trig->points) {
+        struct ARE::Pixel pixel = {
             point,
             trig->color
-        );
+        };
         ARE::RenderPixel(config, &pixel);
     }
 }

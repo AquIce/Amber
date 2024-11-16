@@ -39,8 +39,8 @@ namespace ARE {
     };
 
     struct Pixel newPixel(
-        struct ARE::Vec2 position,
-        struct ARE::RGBA color
+        struct ARE::Vec2 geometry,
+        struct ARE::RGBA color = ARE::newRGBA()
     );
 
     void RenderPixel(
@@ -53,16 +53,19 @@ namespace ARE {
     struct PixelLine {
         struct ARE::Line2 geometry;
         struct ARE::RGBA color;
+        bool isStatic;
+        std::vector<struct ARE::Vec2> points;
     };
 
     struct PixelLine newPixelLine(
-        struct ARE::Line2 line,
-        struct ARE::RGBA color = newRGBA()
+        struct ARE::Line2 geometry,
+        struct ARE::RGBA color = ARE::newRGBA(),
+        bool isStatic = true
     );
 
     void RenderPixelLine(
         ARE::Config* config,
-        const struct PixelLine* line
+        struct PixelLine* line
     );
 
     // Pixel Rectangle
@@ -70,16 +73,19 @@ namespace ARE {
     struct PixelRect {
         struct ARE::Rect2 geometry;
         struct ARE::RGBA color;
+        bool isStatic;
+        std::vector<struct ARE::Vec2> points;
     };
 
     struct PixelRect newPixelRect(
         struct ARE::Rect2 geometry,
-        struct ARE::RGBA color
+        struct ARE::RGBA color = ARE::newRGBA(),
+        bool isStatic = true
     );
 
     void RenderPixelRect(
         ARE::Config* config,
-        const struct PixelRect* rect
+        struct PixelRect* rect
     );
 
     // Pixel Curve
@@ -87,16 +93,19 @@ namespace ARE {
     struct PixelCurve {
         struct ARE::Curve2 geometry;
         struct ARE::RGBA color;
+        bool isStatic;
+        std::vector<struct ARE::Vec2> points;
     };
 
     struct PixelCurve newPixelCurve(
         struct ARE::Curve2 geometry,
-        struct ARE::RGBA color
+        struct ARE::RGBA color = ARE::newRGBA(),
+        bool isStatic = true
     );
 
     void RenderPixelCurve(
         ARE::Config* config,
-        const struct PixelCurve* curve
+        struct PixelCurve* curve
     );
 
     // Pixel Parabola
@@ -104,16 +113,19 @@ namespace ARE {
     struct PixelParabola {
         struct ARE::Parabola2 geometry;
         struct ARE::RGBA color;
+        bool isStatic;
+        std::vector<struct ARE::Vec2> points;
     };
 
     struct PixelParabola newPixelParabola(
         struct ARE::Parabola2 geometry,
-        struct ARE::RGBA color
+        struct ARE::RGBA color = ARE::newRGBA(),
+        bool isStatic = true
     );
 
     void RenderPixelParabola(
         ARE::Config* config,
-        const struct PixelParabola* parabola
+        struct PixelParabola* parabola
     );
 
     // Pixel Trig
@@ -121,15 +133,18 @@ namespace ARE {
     struct PixelTrig {
         struct ARE::Trig2 geometry;
         struct ARE::RGBA color;
+        bool isStatic;
+        std::vector<struct ARE::Vec2> points;
     };
 
     struct PixelTrig newPixelTrig(
         struct ARE::Trig2 geometry,
-        struct ARE::RGBA color
+        struct ARE::RGBA color = ARE::newRGBA(),
+        bool isStatic = true
     );
 
     void RenderPixelTrig(
         ARE::Config* config,
-        const struct ARE::PixelTrig* trig
+        struct ARE::PixelTrig* trig
     );
 }

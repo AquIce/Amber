@@ -72,6 +72,58 @@
     bool up = true;
     ARE::Benchmark benchmark = ARE::newBenchmark("FPS Counter");
 
+    struct ARE::PixelLine line = ARE::newPixelLine(
+        ARE::newLine2(
+            ARE::newVec2(0, 2 * size),
+            ARE::newVec2(config->size.x, config->size.x - 2 * size)
+        ),
+        ARE::newRGBA(255, 255, 255, 255),
+        false
+    );
+
+    struct ARE::PixelRect rect = ARE::newPixelRect(
+        ARE::newRect2(
+            ARE::newVec2(240, 240),
+            ARE::newVec2(50, 100),
+            angle
+        ),
+        ARE::newRGBA(255, 0, 0, 255),
+        false
+    );
+
+    struct ARE::PixelCurve curve = ARE::newPixelCurve(
+        ARE::newCurve2(
+            ARE::newVec2(240, 240),
+            size,
+            angle * 4, M_PI / 3
+        ),
+        ARE::newRGBA(0, 255, 0, 255),
+        false
+    );
+
+    struct ARE::PixelParabola parabola = ARE::newPixelParabola(
+        ARE::newParabola2(
+            ARE::newVec2(240, 240),
+            std::vector<float>({0, 0, 0, static_cast<float>(
+                0.1 / 7 / size
+            )}),
+            ARE::newVec2(120, 480),
+            ARE::newVec2(-120, 0)
+        ),
+        ARE::newRGBA(255, 255, 0, 255),
+        false
+    );
+
+    struct ARE::PixelTrig trig = ARE::newPixelTrig(
+        ARE::newTrig2(
+            ARE::newVec2(240, 360),
+            ARE::TrigType::SIN,
+            5,
+            240, -240
+        ),
+        ARE::newRGBA(255, 255, 255, 255)
+    );
+
     while(running) {
         (void)ARE::log(
             ARE::AddBenchmarkMilestone(&benchmark)
@@ -81,37 +133,35 @@
 
         ARE::ClearScreen(config);
 
-        struct ARE::PixelLine line = ARE::newPixelLine(
-            ARE::newLine2(
-                ARE::newVec2(0, 2 * size),
-                ARE::newVec2(config->size.x, config->size.x - 2 * size)
-            ),
-            ARE::newRGBA(255, 255, 255, 255)
+        line.geometry = ARE::newLine2(
+            ARE::newVec2(0, 2 * size),
+            ARE::newVec2(config->size.x, config->size.x - 2 * size)
         );
+
         ARE::RenderPixelLine(config, &line);
 
-        struct ARE::PixelRect rect = ARE::newPixelRect(
-            ARE::newRect2(
-                ARE::newVec2(240, 240),
-                ARE::newVec2(50, 100),
-                angle
-            ),
-            ARE::newRGBA(255, 0, 0, 255)
-        );
-        angle += M_PI / 1000;
+        rect.geometry.angle = angle;
 
         ARE::RenderPixelRect(config, &rect);
 
-        struct ARE::PixelCurve curve = ARE::newPixelCurve(
-            ARE::newCurve2(
-                ARE::newVec2(240, 240),
-                size,
-                angle * 4, M_PI / 3
-            ),
-            ARE::newRGBA(0, 255, 0, 255)
+        curve.geometry = ARE::newCurve2(
+            ARE::newVec2(240, 240),
+            size,
+            angle * 4, M_PI / 3
         );
 
         ARE::RenderPixelCurve(config, &curve);
+
+        parabola.geometry.coefficients = std::vector<float>(
+            { 0, 0, 0, static_cast<float>(
+                0.1 / 7 / size
+            )}
+        );
+
+        ARE::RenderPixelParabola(config, &parabola);
+
+        ARE::RenderPixelTrig(config, &trig);
+
         size += up ? 1 : -1;
         if(size == 250) {
             up = false;
@@ -119,30 +169,7 @@
             up = true;
         }
 
-        struct ARE::PixelParabola parabola = ARE::newPixelParabola(
-            ARE::newParabola2(
-                ARE::newVec2(240, 240),
-                std::vector<float>({0, 0, 0, static_cast<float>(
-                    0.1 / 7 / size
-                )}),
-                120
-            ),
-            ARE::newRGBA(255, 255, 0, 255)
-        );
-
-        ARE::RenderPixelParabola(config, &parabola);
-
-        struct ARE::PixelTrig trig = ARE::newPixelTrig(
-            ARE::newTrig2(
-                ARE::newVec2(240, 360),
-                ARE::TrigType::SIN,
-                5,
-                240, -240
-            ),
-            ARE::newRGBA(255, 255, 255, 255)
-        );
-
-        ARE::RenderPixelTrig(config, &trig);
+        angle += M_PI / 1000;
 
         ARE::PushRender(config);
 
