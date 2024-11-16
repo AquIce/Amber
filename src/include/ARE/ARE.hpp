@@ -20,16 +20,16 @@
 
 namespace ARE {
 
-    NODISCARD struct ARE::ReturnCode Init(
+    [[nodiscard]] struct ARE::ReturnCode Init(
         struct Config* config
     );
 
-    NODISCARD struct ARE::ReturnCode AddEventHandler(
+    [[nodiscard]] struct ARE::ReturnCode AddEventHandler(
         struct Config* config,
         EventHandler handler
     );
 
-    NODISCARD struct ARE::ReturnCode Run(
+    [[nodiscard]] struct ARE::ReturnCode Run(
         struct Config* config
     );
 }

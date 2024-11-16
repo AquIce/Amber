@@ -135,7 +135,7 @@ typedef enum
  *
  * \since This function is available since SDL 2.0.7.
  */
-extern DECLSPEC void SDLCALL SDL_LockJoysticks(void) SDL_ACQUIRE(SDL_joystick_lock);
+extern DECLSPEC void SDLCALL SDL_LockJoysticks(void)SDL_ACQUIRE(SDL_joystick_lock);
 
 
 /**
@@ -150,7 +150,7 @@ extern DECLSPEC void SDLCALL SDL_LockJoysticks(void) SDL_ACQUIRE(SDL_joystick_lo
  *
  * \since This function is available since SDL 2.0.7.
  */
-extern DECLSPEC void SDLCALL SDL_UnlockJoysticks(void) SDL_RELEASE(SDL_joystick_lock);
+extern DECLSPEC void SDLCALL SDL_UnlockJoysticks(void)SDL_RELEASE(SDL_joystick_lock);
 
 /**
  * Count the number of joysticks attached to the system.

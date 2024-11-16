@@ -15,7 +15,7 @@ struct ARE::Log ARE::newLog(
     return { level, code, message };
 }
 
-NODISCARD ARE::ReturnCode ARE::log(
+[[nodiscard]] ARE::ReturnCode ARE::log(
     ARE::Log l
 ) {
     switch(l.level) {

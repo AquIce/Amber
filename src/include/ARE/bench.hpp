@@ -25,7 +25,7 @@ namespace ARE {
         std::string name
     );
 
-    NODISCARD ARE::Log AddBenchmarkMilestone(
+    [[nodiscard]] ARE::Log AddBenchmarkMilestone(
         struct Benchmark* benchmark,
         std::chrono::time_point<std::chrono::system_clock> milestone = std::chrono::system_clock::now()
     );

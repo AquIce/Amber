@@ -36,7 +36,7 @@ namespace ARE {
         std::string message
     );
 
-    NODISCARD ReturnCode log(
+    [[nodiscard]] ReturnCode log(
         Log l
     );
 }

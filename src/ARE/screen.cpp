@@ -11,7 +11,7 @@ void ARE::ClearScreen(
     SDL_RenderClear(config->sdl.renderer);
 }
 
-NODISCARD bool ARE::ChangeRenderRGBA(
+[[nodiscard]] bool ARE::ChangeRenderRGBA(
     ARE::Config* config,
     struct ARE::RGBA rgba
 ) {
@@ -50,7 +50,7 @@ void ARE::RenderPixel(
     ARE::Config* config,
     const struct ARE::Pixel* pixel
 ) {
-    FORCE_DISCARD ARE::ChangeRenderRGBA(config, pixel->color);
+    (void)ARE::ChangeRenderRGBA(config, pixel->color);
     SDL_RenderDrawPoint(
         config->sdl.renderer,
         pixel->geometry.x, pixel->geometry.y

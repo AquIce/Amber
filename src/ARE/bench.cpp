@@ -19,7 +19,7 @@ struct ARE::Benchmark ARE::newBenchmark(
     };
 }
 
-NODISCARD ARE::Log ARE::AddBenchmarkMilestone(
+[[nodiscard]] ARE::Log ARE::AddBenchmarkMilestone(
     struct ARE::Benchmark* benchmark,
     std::chrono::time_point<std::chrono::system_clock> milestone
 ) {
@@ -87,7 +87,7 @@ void ARE::ShowBenchmarkStats(
 ) {
     struct ARE::BenchmarkStats stats = ARE::GetBenchmarkStats(benchmark);
 
-    FORCE_DISCARD ARE::log(
+    (void)ARE::log(
         ARE::newLog(
             ARE::LogLevel::INFO,
             ARE::newReturnCode(),

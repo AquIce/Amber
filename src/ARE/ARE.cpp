@@ -1,6 +1,6 @@
 #include <ARE/ARE.hpp>
 
-NODISCARD struct ARE::ReturnCode ARE::Init(
+[[nodiscard]] struct ARE::ReturnCode ARE::Init(
     struct ARE::Config* config
 ) {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -55,7 +55,7 @@ NODISCARD struct ARE::ReturnCode ARE::Init(
     return ARE::newReturnCode();
 }
 
-NODISCARD ARE::ReturnCode ARE::AddEventHandler(
+[[nodiscard]] ARE::ReturnCode ARE::AddEventHandler(
     struct ARE::Config* config,
     ARE::EventHandler handler
 ) {
@@ -63,7 +63,7 @@ NODISCARD ARE::ReturnCode ARE::AddEventHandler(
     return ARE::newReturnCode();
 }
 
-NODISCARD ARE::ReturnCode ARE::Run(
+[[nodiscard]] ARE::ReturnCode ARE::Run(
     struct ARE::Config* config
 ) {
     bool running = true;
@@ -73,7 +73,7 @@ NODISCARD ARE::ReturnCode ARE::Run(
     ARE::Benchmark benchmark = ARE::newBenchmark("FPS Counter");
 
     while(running) {
-        FORCE_DISCARD ARE::log(
+        (void)ARE::log(
             ARE::AddBenchmarkMilestone(&benchmark)
         );
 

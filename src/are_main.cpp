@@ -15,7 +15,7 @@ int WinMain(int argc, char** argv) {
         return static_cast<int>(status.exitCode);
     }
 
-    FORCE_DISCARD ARE::AddEventHandler(&config, {
+    (void)ARE::AddEventHandler(&config, {
         SDL_QUIT,
         [] (bool* running) -> void {
             *running = false;

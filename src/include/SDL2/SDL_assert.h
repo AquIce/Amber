@@ -105,7 +105,7 @@ disable assertions.
 #endif
 
 #define SDL_disabled_assert(condition) \
-    do { (void) sizeof ((condition)); } while (SDL_NULL_WHILE_LOOP_CONDITION)
+    do { (void)sizeof ((condition)); } while (SDL_NULL_WHILE_LOOP_CONDITION)
 
 typedef enum
 {

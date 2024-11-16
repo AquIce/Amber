@@ -22,7 +22,7 @@ namespace ARE {
         struct ARE::RGBA rgba = newRGBA()
     );
 
-    NODISCARD bool ChangeRenderRGBA(
+    [[nodiscard]] bool ChangeRenderRGBA(
         ARE::Config* config,
         struct ARE::RGBA rgba
     );
