@@ -7,7 +7,7 @@ int WinMain(int argc, char** argv) {
 
     struct ARE::Config config = ARE::newConfig(
         "ARE",
-        ARE::newVec2(480, 480)
+        ARE::newVec2(1200, 640)
     );
 
     ARE::ReturnCode status = ARE::Init(&config);

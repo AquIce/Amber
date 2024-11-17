@@ -83,7 +83,7 @@
 
     struct ARE::PixelRect rect = ARE::newPixelRect(
         ARE::newRect2(
-            ARE::newVec2(240, 240),
+            ARE::newVec2(config->size.x / 2, config->size.y / 2),
             ARE::newVec2(50, 100),
             angle
         ),
@@ -93,7 +93,7 @@
 
     struct ARE::PixelCurve curve = ARE::newPixelCurve(
         ARE::newCurve2(
-            ARE::newVec2(240, 240),
+            ARE::newVec2(config->size.x / 2, config->size.y / 2),
             size,
             angle * 4, M_PI / 3
         ),
@@ -103,12 +103,12 @@
 
     struct ARE::PixelParabola parabola = ARE::newPixelParabola(
         ARE::newParabola2(
-            ARE::newVec2(240, 240),
+            ARE::newVec2(config->size.x / 2, config->size.y / 2),
             std::vector<float>({0, 0, 0, static_cast<float>(
                 0.1 / 7 / size
             )}),
-            ARE::newVec2(120, 480),
-            ARE::newVec2(-120, 0)
+            ARE::newVec2(config->size.x / 4, config->size.y),
+            ARE::newVec2(-config->size.x / 4, 0)
         ),
         ARE::newRGBA(255, 255, 0, 255),
         false
@@ -116,10 +116,10 @@
 
     struct ARE::PixelTrig trig = ARE::newPixelTrig(
         ARE::newTrig2(
-            ARE::newVec2(240, 360),
+            ARE::newVec2(config->size.x / 2, config->size.x / 4 * 3),
             ARE::TrigType::SIN,
             5,
-            240, -240
+            config->size.x / 2, -config->size.y / 2
         ),
         ARE::newRGBA(255, 255, 255, 255)
     );
@@ -145,7 +145,7 @@
         ARE::RenderPixelRect(config, &rect);
 
         curve.geometry = ARE::newCurve2(
-            ARE::newVec2(240, 240),
+            ARE::newVec2(config->size.x / 2, config->size.y / 2),
             size,
             angle * 4, M_PI / 3
         );
@@ -163,7 +163,7 @@
         ARE::RenderPixelTrig(config, &trig);
 
         size += up ? 1 : -1;
-        if(size == 250) {
+        if(size == config->size.x / 2) {
             up = false;
         } else if(size == 1) {
             up = true;
