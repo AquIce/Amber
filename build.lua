@@ -1,79 +1,69 @@
-workspace "Aqu1"
+workspace "Amber"
 	configurations { "DEBUG", "RELEASE" }
 	platforms { "run", "static-build", "dynamic-build" }
-	startproject "AquEngine"
-	
+	startproject "AmberEngine"
+
 	project "ARE"
 	    language "C++"
 		location "build/"
 		entrypoint "main"
-		
+
 		files {
 		    "src/are_main.cpp",
 		    "src/ARE/*.cpp",
 		    "src/include/ARE/*.hpp"
 		}
-		
+
 		libdirs {
-		    "bin"
+	       "bin"
 		}
-		
+
 		links {
 		    "mingw32",
 		    "SDL2"
 		}
-		
+
 		includedirs {
     		"src/include",
     	}
-    
-    	filter { "action:gmake" }
+
+    	filter "action:gmake"
             buildoptions { "-Wall", "-Werror", "-Wpedantic", "-g3" }
-    
-    	filter { "platforms:run" }
+
+    	filter "platforms:run"
     		kind "ConsoleApp"
-    
-    	filter { "platforms:static-build" }
+
+    	filter "platforms:static-build"
     		kind "StaticLib"
     		removefiles { "adl_main.cpp" }
-    
-    	filter { "platforms:dynamic-build" }
+
+    	filter "platforms:dynamic-build"
     		kind "SharedLib"
     		removefiles { "adl_main.cpp" }
-    
-    	filter { "configurations:debug" }
+
+    	filter "configurations:debug"
     	    defines { "DEBUG" }
     		symbols "On"
 
-    project "AquEngine"
+    project "AmberEngine"
     	language "C++"
     	location "build/"
     	entrypoint "main"
-    
+        kind "ConsoleApp"
+
     	files {
     		"src/main.cpp",
-    		"src/aquengine/**/*.cpp",
-    		"src/include/aquengine/*.hpp",
+    		"src/amber/**/*.cpp",
+    		"src/include/amber/*.hpp",
     	}
-    
+
     	includedirs {
     		"src/include",
     	}
-    
-    	filter { "action:gmake" }
+
+    	filter "action:gmake"
             buildoptions { "-Wall", "-Werror", "-Wpedantic", "-g3" }
-    
-    	filter { "platforms:run" }
-    		kind "ConsoleApp"
-    
-    	filter { "platforms:static-build" }
-    		kind "StaticLib"
-    		removefiles { "main.cpp" }
-    
-    	filter { "platforms:dynamic-build" }
-    		kind "SharedLib"
-    		removefiles { "main.cpp" }
-    
-    	filter { "configurations:debug" }
+
+    	filter "configurations:debug"
     	    defines { "DEBUG" }
     		symbols "On"

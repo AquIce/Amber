@@ -1,6 +1,8 @@
-# Aqu1
+# Amber
 
-## Initialization
+## ARE
+
+### Initialization
 
 Ensure you have internet connection, and run the following script from the root of the repo:
 ```sh
@@ -8,14 +10,14 @@ Ensure you have internet connection, and run the following script from the root 
 ```
 This will pull the SDL.dll file from the SDL github repository.
 
-## Build
+### Build
 
-To build the project, use the `build.bat` script:
+To build the project, use the `are_build.bat` script:
 ```sh
-./scripts/build.bat
+./scripts/are_build.bat
 ```
 
-## Progress
+### Progress
 
 - [x] Base SDL Setup
 - [ ] 1st Project - 2D Function Renderer
@@ -41,6 +43,21 @@ To build the project, use the `build.bat` script:
 - [ ] 5th Project - Physics Engine
   - [ ] ...
 
-## Tasks
+### Tasks
 
 - [ ] Add possiblity to edit created geometry (better perfs)
+
+## Amber
+
+### Build
+
+To build the project, use the `amber_build.bat` script:
+```sh
+./scripts/amber_build.bat
+```
+
+### Progress
+
+
+
+### Tasks
