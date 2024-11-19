@@ -1,5 +1,13 @@
+#include <Amber/Amber.hpp>
+
 #include <iostream>
 
-int main(int argc, char** argv) {
-    std::cout << "Hello, World!" << std::endl;
+class SandboxApp : public Amber::App {
+public:
+    SandboxApp() {}
+    ~SandboxApp() {}
+};
+
+Amber::App* Amber::CreateApp() {
+    return new SandboxApp();
 }

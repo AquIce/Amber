@@ -48,17 +48,17 @@ workspace "Amber"
     project "AmberEngine"
     	language "C++"
     	location "build/"
-    	entrypoint "main"
         kind "ConsoleApp"
 
     	files {
     		"src/main.cpp",
-    		"src/amber/**/*.cpp",
-    		"src/include/amber/*.hpp",
+    		"src/Amber/**.cpp",
+    		"src/include/Amber/**.hpp",
     	}
 
     	includedirs {
     		"src/include",
+            "vendor/spdlog/include"
     	}
 
     	filter "action:gmake"
